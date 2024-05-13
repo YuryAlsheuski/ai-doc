@@ -7,5 +7,5 @@ while [ "$(ollama list | grep 'NAME')" == "" ]; do
   sleep 1
 done
 
-ollama pull nomic-embed-text
-ollama pull chevalblanc/embedding-small:latest
+ollama pull $DEFAULT_TEXT_EMBEDDINGS_MODEL
+ollama pull $DEFAULT_TEXT_GENERATION_MODEL
