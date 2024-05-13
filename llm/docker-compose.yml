@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  llm:
+    build: .
+    tty: true
+    restart: on-failure
+    ports:
+      - '11434:11434'
+    environment:
+      - OLLAMA_NUM_PARALLEL=4
+      - OLLAMA_MAX_LOADED_MODELS=4
+    command: serve
+    volumes:
+      - ollama:/root/.ollama
+
+volumes:
+  ollama:
