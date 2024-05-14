@@ -3,10 +3,8 @@ version: '3.8'
 services:
   ollama:
     build:
-     context: ./ollama
-     args:
-       TEXT_EMBEDDINGS_MODEL: ${TEXT_EMBEDDINGS_MODEL}
-       TEXT_GENERATION_MODEL: ${TEXT_GENERATION_MODEL}
+     context: ./
+     dockerfile: ./ollama/Dockerfile
     tty: true
     restart: on-failure
     ports:

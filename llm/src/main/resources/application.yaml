@@ -1,0 +1,11 @@
+llm:
+  default:
+    model:
+      text:
+        embedding:
+          name: nomic-embed-text
+        generating:
+          name: chevalblanc/embedding-small:latest
+      image:
+        embedding:
+          name: milkey/dmeta-embedding-zh:f16
