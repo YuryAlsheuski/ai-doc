@@ -1,10 +1,11 @@
 version: '3.8'
 
 services:
+
   ollama:
     build:
-     context: ./
-     dockerfile: ./ollama/Dockerfile
+      context: ..
+      dockerfile: docker/ollama/Dockerfile
     tty: true
     restart: on-failure
     ports:
@@ -15,6 +16,17 @@ services:
     command: serve
     volumes:
       - ollama:/root/.ollama
+
+  app:
+    build:
+      context: ..
+      dockerfile: docker/app/Dockerfile
+    tty: true
+    restart: on-failure
+    ports:
+      - '8080:8080'
+
+
 
 volumes:
   ollama:

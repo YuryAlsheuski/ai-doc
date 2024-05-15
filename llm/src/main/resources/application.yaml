@@ -3,9 +3,7 @@ llm:
     model:
       text:
         embedding:
-          name: nomic-embed-text
+          name: nomic-embed-text:latest
         generating:
-          name: chevalblanc/embedding-small:latest
-      image:
-        embedding:
-          name: milkey/dmeta-embedding-zh:f16
+          name: llama3:latest
+

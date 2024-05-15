@@ -5,8 +5,8 @@ FROM ollama/ollama
 
 WORKDIR /usr/local/bin/
 
-COPY ../ollama/setup.sh .
-COPY ../src/main/resources/application.yaml .
+COPY setup.sh .
+COPY ../../src/main/resources/application.yaml .
 COPY --from=yq "/usr/bin/yq" .
 
 # if we does not need to update llms every time during start need to change startup script
