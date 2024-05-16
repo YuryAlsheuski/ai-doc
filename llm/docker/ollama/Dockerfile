@@ -5,7 +5,7 @@ FROM ollama/ollama
 
 WORKDIR /usr/local/bin/
 
-COPY setup.sh .
+COPY ../../docker/ollama/setup.sh .
 COPY ../../src/main/resources/application.yaml .
 COPY --from=yq "/usr/bin/yq" .
 

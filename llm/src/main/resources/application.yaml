@@ -6,4 +6,4 @@ llm:
           name: nomic-embed-text:latest
         generating:
           name: llama3:latest
-
+    url: http://localhost:11434
