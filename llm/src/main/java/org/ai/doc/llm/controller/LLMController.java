@@ -12,12 +12,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+// todo add swagger
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/api/v1/llm")
 final class LLMController {
 
-  private final ModelMapper modelMapper;//todo delete if do not need
+  private final ModelMapper modelMapper; // todo delete if do not need
 
   @PostMapping(path = "/text/embeddings", consumes = APPLICATION_JSON_VALUE)
   ResponseEntity<ResponseDTO> embeddText(@Valid @RequestBody RequestDTO dto) {
@@ -29,7 +31,6 @@ final class LLMController {
     return ResponseEntity.ok(ResponseDTO.builder().output("descrPlaceholder").build());
   }
 
-
   @PostMapping(path = "/image/embeddings", consumes = MULTIPART_FORM_DATA_VALUE)
   ResponseEntity<ResponseDTO> embeddImage(@Valid @ModelAttribute FileRequestDTO dto) {
     return ResponseEntity.ok(ResponseDTO.builder().vector(new double[] {0.2222}).build());
@@ -39,5 +40,4 @@ final class LLMController {
   ResponseEntity<ResponseDTO> describeImage(@Valid @ModelAttribute FileRequestDTO dto) {
     return ResponseEntity.ok(ResponseDTO.builder().output("descrPlaceholder").build());
   }
-
 }

@@ -12,11 +12,13 @@ repositories {
 }
 
 def lombokVersion = '1.18.30'
+def modelmapperVersion='3.1.1'
 
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "org.springframework.boot:spring-boot-starter-validation"
-    implementation 'org.modelmapper:modelmapper:3.1.1'
+
+    implementation "org.modelmapper:modelmapper:${modelmapperVersion}"
 
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
