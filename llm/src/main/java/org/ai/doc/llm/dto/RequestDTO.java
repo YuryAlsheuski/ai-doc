@@ -12,7 +12,7 @@ import lombok.Setter;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RequestDTO {
-  private String prompt;
+  private String query;
   private Double temperature;
   private Integer topK;
   private Double topP;
