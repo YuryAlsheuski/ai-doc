@@ -1,8 +1,5 @@
 package org.ai.doc.llm.controller;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
-
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.ai.doc.llm.dto.FileRequestDTO;
@@ -21,22 +18,23 @@ final class LLMController {
 
   private final ModelMapper modelMapper; // todo delete if do not need
 
-  @PostMapping(path = "/text/embeddings", consumes = APPLICATION_JSON_VALUE)
+  @PostMapping("/text/embeddings")
   ResponseEntity<ResponseDTO> embeddText(@Valid @RequestBody RequestDTO dto) {
     return ResponseEntity.ok(ResponseDTO.builder().vector(new double[] {0.2222}).build());
   }
 
-  @PostMapping(path = "/text/generations", consumes = APPLICATION_JSON_VALUE)
+  @PostMapping("/text/generations")
   ResponseEntity<ResponseDTO> generateText(@Valid @RequestBody RequestDTO dto) {
     return ResponseEntity.ok(ResponseDTO.builder().output("descrPlaceholder").build());
   }
 
-  @PostMapping(path = "/image/embeddings", consumes = MULTIPART_FORM_DATA_VALUE)
+  @PostMapping("/image/embeddings")
   ResponseEntity<ResponseDTO> embeddImage(@Valid @ModelAttribute FileRequestDTO dto) {
-    return ResponseEntity.ok(ResponseDTO.builder().vector(new double[] {0.2222}).build());
+    return ResponseEntity.ok(
+        ResponseDTO.builder().vector(new double[] {dto.getFile().getSize()}).build());
   }
 
-  @PostMapping(path = "/image/descriptions", consumes = MULTIPART_FORM_DATA_VALUE)
+  @PostMapping("/image/descriptions")
   ResponseEntity<ResponseDTO> describeImage(@Valid @ModelAttribute FileRequestDTO dto) {
     return ResponseEntity.ok(ResponseDTO.builder().output("descrPlaceholder").build());
   }
