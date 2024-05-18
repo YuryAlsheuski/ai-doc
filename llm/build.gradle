@@ -9,18 +9,19 @@ version = '1.0'
 
 repositories {
     mavenCentral()
+    maven { url 'https://repo.spring.io/milestone' }
+    maven { url 'https://repo.spring.io/snapshot' }
 }
 
 def lombokVersion = '1.18.30'
 def modelmapperVersion='3.1.1'
-def langChainVersion='0.30.0'
 
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "org.springframework.boot:spring-boot-starter-validation"
+    implementation 'org.springframework.ai:spring-ai-ollama:0.8.1'
 
     implementation "org.modelmapper:modelmapper:${modelmapperVersion}"
-    implementation "dev.langchain4j:langchain4j-ollama:${langChainVersion}"
 
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
