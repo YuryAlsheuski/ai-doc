@@ -1,4 +1,4 @@
-package org.ai.doc.llm.dto;
+package org.ai.doc.core.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;

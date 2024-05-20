@@ -1,4 +1,4 @@
-package org.ai.doc.llm.config.validation;
+package org.ai.doc.core.config.validation;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;

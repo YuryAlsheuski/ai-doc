@@ -1,4 +1,4 @@
-package org.ai.doc.llm.config.mapper;
+package org.ai.doc.core.config.mapper;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

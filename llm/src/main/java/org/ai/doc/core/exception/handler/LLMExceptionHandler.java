@@ -1,4 +1,4 @@
-package org.ai.doc.llm.exception.handler;
+package org.ai.doc.core.exception.handler;
 
 import static java.util.stream.Collectors.toList;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;

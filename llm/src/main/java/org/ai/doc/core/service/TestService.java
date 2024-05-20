@@ -1,11 +1,19 @@
-package org.ai.doc.llm.service;
+package org.ai.doc.core.service;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.ai.chat.messages.Media;
+import org.springframework.ai.chat.messages.UserMessage;
+import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.ollama.OllamaChatClient;
+import org.springframework.ai.ollama.OllamaEmbeddingClient;
 import org.springframework.ai.ollama.api.OllamaApi;
 import org.springframework.ai.ollama.api.OllamaOptions;
+import org.springframework.ai.openai.OpenAiChatClient;
+import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MimeTypeUtils;
 
 @Service
 @RequiredArgsConstructor
@@ -23,34 +31,32 @@ public class TestService {
   private final OllamaApi api;
 
   public List<Double> embed(String text) {
-    var request = new OllamaApi.EmbeddingRequest(embedModel, text);
-    var response = api.embeddings(request);
-    return response.embedding();
+    var options = new OllamaOptions().withModel(embedModel);//set other options here
+    var embClient = new OllamaEmbeddingClient(api).withDefaultOptions(options);
+    return embClient.embed(text);
   }
 
   public String generate(String prompt) {
-    var request =
-        OllamaApi.GenerateRequest.builder(prompt).withStream(false).withModel(langModel).build();
-    var response = api.generate(request);
-    return response.response();
+    var options = new OllamaOptions().withModel(langModel);//set other options here
+    var olClient = new OllamaChatClient(api).withDefaultOptions(options);
+    return olClient.call(prompt);
   }
 
   public String describeImage(String prompt, byte[] content) {
-    // var message = new UserMessage(prompt, List.of(new Media(MimeTypeUtils.IMAGE_PNG,content)));
-    var messages =
-        List.of(
-            OllamaApi.Message.builder(OllamaApi.Message.Role.USER)
-                .withContent(prompt)
-                .withImages(List.of(content))
-                .build());
 
-    var request =
-        OllamaApi.ChatRequest.builder(imgDescriptionModel)
-            .withStream(false)
-            .withMessages(messages)
-            .build();
+    var options = new OllamaOptions().withModel(imgDescriptionModel);//set other options here
+    var olClient = new OllamaChatClient(api).withDefaultOptions(options);
+    var message = new UserMessage(prompt, List.of(new Media(MimeTypeUtils.IMAGE_PNG,content)));
+    Prompt pr = new Prompt(message);
+    return olClient.call(pr).getResult().getOutput().getContent();
+  }
 
-    return api.chat(request).message().content();
+
+  public String openAITest(String prompt){
+    var openAiApi = new OpenAiApi("sk-proj-4PtTeEDgeJP9Z1m5M0n2T3BlbkFJalJmEvAXmZoNYCPilmqY");
+    var client = new OpenAiChatClient(openAiApi);
+
+    return client.call(prompt);
   }
 
   public String test() {

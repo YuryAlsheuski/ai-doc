@@ -1,4 +1,4 @@
-package org.ai.doc.llm.dto;
+package org.ai.doc.core.dto;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 

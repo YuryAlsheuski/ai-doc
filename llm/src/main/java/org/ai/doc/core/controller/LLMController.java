@@ -1,13 +1,13 @@
-package org.ai.doc.llm.controller;
+package org.ai.doc.core.controller;
 
 import jakarta.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.ai.doc.llm.dto.FileRequestDTO;
-import org.ai.doc.llm.dto.RequestDTO;
-import org.ai.doc.llm.dto.ResponseDTO;
-import org.ai.doc.llm.service.TestService;
+import org.ai.doc.core.dto.FileRequestDTO;
+import org.ai.doc.core.dto.RequestDTO;
+import org.ai.doc.core.dto.ResponseDTO;
+import org.ai.doc.core.service.TestService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
