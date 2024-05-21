@@ -1,4 +1,4 @@
-package org.ai.doc.core.service;
+package org.ai.doc.core.factory;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -55,7 +55,6 @@ public class TestService {
   public String openAITest(String prompt){
     var openAiApi = new OpenAiApi("sk-proj-4PtTeEDgeJP9Z1m5M0n2T3BlbkFJalJmEvAXmZoNYCPilmqY");
     var client = new OpenAiChatClient(openAiApi);
-
     return client.call(prompt);
   }
 

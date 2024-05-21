@@ -1,5 +1,7 @@
 package org.ai.doc.core.controller;
 
+import static org.ai.doc.provider.common.domain.ProviderType.OLLAMA;
+
 import jakarta.validation.Valid;
 import java.io.IOException;
 import java.util.List;
@@ -7,8 +9,10 @@ import lombok.RequiredArgsConstructor;
 import org.ai.doc.core.dto.FileRequestDTO;
 import org.ai.doc.core.dto.RequestDTO;
 import org.ai.doc.core.dto.ResponseDTO;
-import org.ai.doc.core.service.TestService;
+import org.ai.doc.core.factory.LLMClientFactory;
+import org.ai.doc.core.factory.TestService;
 import org.modelmapper.ModelMapper;
+import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,10 +25,12 @@ final class LLMController {
 
   private final ModelMapper modelMapper; // todo delete if do not need
   private final TestService testService;
+  private final LLMClientFactory clientFactory;
 
   @PostMapping("/text/embeddings")
   ResponseEntity<ResponseDTO> embeddText(@Valid @RequestBody RequestDTO dto) {
-    var vector = testService.embed(dto.getQuery());
+    var prompt = new Prompt(dto.getQuery());
+    var vector = clientFactory.getEmbeddingClient(OLLAMA).call(prompt,null);
     return ResponseEntity.ok(ResponseDTO.builder().vector(vector).build());
   }
 

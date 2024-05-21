@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class OllamaConfig {
+class OllamaConfig {
 
   @Value("${llm.default.url}")
   private String llmURL;
