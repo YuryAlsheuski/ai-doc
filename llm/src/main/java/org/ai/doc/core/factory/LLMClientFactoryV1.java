@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 final class LLMClientFactoryV1 implements LLMClientFactory {
 
-  private final Map<ProviderType, Provider<EmbeddingClient>> embeddingClientFactories;
-  private final Map<ProviderType, Provider<ChatClient>> chatClientFactories;
+  private final Map<ProviderType, Provider<EmbeddingClient>> typeToEmbeddingProviders;
+  private final Map<ProviderType, Provider<ChatClient>> typeToChatProviders;
 
   @Override
   public LLMClient<String> getChatClient(ProviderType type, ModelOptions modelOptions) {
@@ -27,7 +27,7 @@ final class LLMClientFactoryV1 implements LLMClientFactory {
   public LLMClient<List<Double>> getEmbeddingClient(ProviderType type, ModelOptions modelOptions) {
     return (prompt) -> {
       try {
-        return embeddingClientFactories
+        return typeToEmbeddingProviders
             .get(type)
             .getClient(modelOptions)
             .embed(prompt.getContents());

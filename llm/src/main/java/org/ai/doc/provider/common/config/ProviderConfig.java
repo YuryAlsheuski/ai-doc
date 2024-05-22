@@ -15,15 +15,15 @@ class ProviderConfig {
 
   @Bean
   Map<ProviderType, Provider<EmbeddingClient>> getEmbeddingClientFactories(
-      List<Provider<EmbeddingClient>> factories) {
+      List<Provider<EmbeddingClient>> providers) {
 
-    return factories.stream().collect(Collectors.toMap(Provider::getType, v -> v));
+    return providers.stream().collect(Collectors.toMap(Provider::getType, v -> v));
   }
 
   @Bean
   Map<ProviderType, Provider<ChatClient>> getChatClientFactories(
-      List<Provider<ChatClient>> factories) {
+      List<Provider<ChatClient>> providers) {
 
-    return factories.stream().collect(Collectors.toMap(Provider::getType, v -> v));
+    return providers.stream().collect(Collectors.toMap(Provider::getType, v -> v));
   }
 }
