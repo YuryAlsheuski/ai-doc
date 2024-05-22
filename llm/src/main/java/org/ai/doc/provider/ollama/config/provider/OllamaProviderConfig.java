@@ -1,6 +1,5 @@
 package org.ai.doc.provider.ollama.config.provider;
 
-import static org.ai.doc.provider.common.domain.ProviderType.OLLAMA;
 
 import lombok.RequiredArgsConstructor;
 import org.ai.doc.provider.common.converter.ModelOptionConverter;
@@ -13,6 +12,8 @@ import org.springframework.ai.ollama.api.OllamaApi;
 import org.springframework.ai.ollama.api.OllamaOptions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import static org.ai.doc.common.domain.EngineType.OLLAMA;
 
 @Configuration
 @RequiredArgsConstructor

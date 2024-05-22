@@ -1,6 +1,5 @@
 package org.ai.doc.core.controller;
 
-import static org.ai.doc.provider.common.domain.ProviderType.OLLAMA;
 
 import jakarta.validation.Valid;
 import java.io.IOException;
@@ -14,6 +13,8 @@ import org.ai.doc.core.factory.TestService;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import static org.ai.doc.common.domain.EngineType.OLLAMA;
 
 // todo add swagger
 

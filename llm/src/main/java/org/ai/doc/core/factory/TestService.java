@@ -11,7 +11,6 @@ import org.springframework.ai.ollama.api.OllamaApi;
 import org.springframework.ai.ollama.api.OllamaOptions;
 import org.springframework.ai.openai.OpenAiChatClient;
 import org.springframework.ai.openai.api.OpenAiApi;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeTypeUtils;
 
@@ -19,13 +18,13 @@ import org.springframework.util.MimeTypeUtils;
 @RequiredArgsConstructor
 public class TestService {
 
-  @Value("${llm.default.model.text.generating.name}")
+ // @Value("${llm.default.model.text.generating.name}")
   private String langModel;
 
-  @Value("${llm.default.model.text.embedding.name}")
+ // @Value("${llm.default.model.text.embedding.name}")
   private String embedModel;
 
-  @Value("${llm.default.model.image.description.name}")
+ // @Value("${llm.default.model.image.description.name}")
   private String imgDescriptionModel;
 
   private final OllamaApi api;

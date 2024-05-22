@@ -1,6 +1,6 @@
 package org.ai.doc.provider.openai.config.provider;
 
-import static org.ai.doc.provider.common.domain.ProviderType.OPEN_AI;
+import static org.ai.doc.common.domain.EngineType.OPEN_AI;
 import static org.springframework.ai.document.MetadataMode.EMBED;
 import static org.springframework.ai.retry.RetryUtils.DEFAULT_RETRY_TEMPLATE;
 

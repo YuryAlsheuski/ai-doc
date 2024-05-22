@@ -3,9 +3,9 @@ package org.ai.doc.core.factory;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import org.ai.doc.common.domain.EngineType;
 import org.ai.doc.core.domain.LLMClient;
 import org.ai.doc.provider.common.domain.Provider;
-import org.ai.doc.provider.common.domain.ProviderType;
 import org.springframework.ai.chat.ChatClient;
 import org.springframework.ai.embedding.EmbeddingClient;
 import org.springframework.ai.model.ModelOptions;
@@ -15,16 +15,16 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 final class LLMClientFactory implements ClientFactory {
 
-  private final Map<ProviderType, Provider<EmbeddingClient>> typeToEmbeddingProviders;
-  private final Map<ProviderType, Provider<ChatClient>> typeToChatProviders;
+  private final Map<EngineType, Provider<EmbeddingClient>> typeToEmbeddingProviders;
+  private final Map<EngineType, Provider<ChatClient>> typeToChatProviders;
 
   @Override
-  public LLMClient<String> getChatClient(ProviderType type, ModelOptions modelOptions) {
+  public LLMClient<String> getChatClient(EngineType type, ModelOptions modelOptions) {
     return null;
   }
 
   @Override
-  public LLMClient<List<Double>> getEmbeddingClient(ProviderType type, ModelOptions modelOptions) {
+  public LLMClient<List<Double>> getEmbeddingClient(EngineType type, ModelOptions modelOptions) {
     return (prompt) -> {
       try {
         return typeToEmbeddingProviders

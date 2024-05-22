@@ -1,12 +1,31 @@
 llm:
-  default:
-    model:
-      text:
-        embedding:
-          name: nomic-embed-text:latest
-        generating:
-          name: llama3:latest
-      image:
-        description:
-          name: llava:latest
-    url: http://localhost:11434
+  engines:
+    - type: ollama
+      url: http://localhost:11434
+      models:
+        - type: text
+          embedding:
+            name: nomic-embed-text:latest
+          generation:
+            name: llama3:latest
+        - type: image
+          description:
+            name: llava:latest
+
+    - type: open-ai
+      url: http://openai:777
+      models:
+        - type: text
+          embedding:
+            name: test-embedding-model
+          generation:
+            name: test-generation-model
+        - type: image
+          description:
+            name: test-description-model
+
+
+
+
+
+
