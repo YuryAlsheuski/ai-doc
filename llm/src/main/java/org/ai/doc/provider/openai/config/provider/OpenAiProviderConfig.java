@@ -1,9 +1,10 @@
-package org.ai.doc.provider.openai.config;
+package org.ai.doc.provider.openai.config.provider;
 
 import static org.ai.doc.provider.common.domain.ProviderType.OPEN_AI;
 import static org.springframework.ai.document.MetadataMode.EMBED;
 import static org.springframework.ai.retry.RetryUtils.DEFAULT_RETRY_TEMPLATE;
 
+import org.ai.doc.provider.common.converter.ModelOptionConverter;
 import org.ai.doc.provider.common.domain.Provider;
 import org.springframework.ai.chat.ChatClient;
 import org.springframework.ai.embedding.EmbeddingClient;
@@ -16,25 +17,21 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-class OpenAiConfig {
-
+class OpenAiProviderConfig {
   @Bean
-  OpenAiApi getApi() {
-    return new OpenAiApi("demo");
-  }
-
-  @Bean("OpenAiEmbeddingClient")
-  Provider<EmbeddingClient> getEmbeddingProvider(OpenAiApi api) {
+  Provider<EmbeddingClient> getOpenAiEmbeddingProvider(
+      OpenAiApi api, ModelOptionConverter<OpenAiEmbeddingOptions> converter) {
     return new Provider<>(
         OPEN_AI,
         (options) ->
             new OpenAiEmbeddingClient(
-                api, EMBED, (OpenAiEmbeddingOptions) options, DEFAULT_RETRY_TEMPLATE));
+                api, EMBED, converter.convert(options), DEFAULT_RETRY_TEMPLATE));
   }
 
-  @Bean("OpenAiChatClient")
-  Provider<ChatClient> getChatProvider(OpenAiApi api) {
+  @Bean
+  Provider<ChatClient> getOpenAiProvider(
+      OpenAiApi api, ModelOptionConverter<OpenAiChatOptions> converter) {
     return new Provider<>(
-        OPEN_AI, (options) -> new OpenAiChatClient(api, (OpenAiChatOptions) options));
+        OPEN_AI, (options) -> new OpenAiChatClient(api, converter.convert(options)));
   }
 }

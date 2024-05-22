@@ -1,4 +1,4 @@
-package org.ai.doc.provider.common.config;
+package org.ai.doc.provider.common.config.provider;
 
 import java.util.List;
 import java.util.Map;

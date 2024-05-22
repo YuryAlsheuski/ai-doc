@@ -9,9 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.ai.doc.core.dto.FileRequestDTO;
 import org.ai.doc.core.dto.RequestDTO;
 import org.ai.doc.core.dto.ResponseDTO;
-import org.ai.doc.core.factory.LLMClientFactory;
+import org.ai.doc.core.factory.ClientFactory;
 import org.ai.doc.core.factory.TestService;
-import org.modelmapper.ModelMapper;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,20 +22,20 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/api/v1/llm")
 final class LLMController {
 
-  private final ModelMapper modelMapper; // todo delete if do not need
   private final TestService testService;
-  private final LLMClientFactory clientFactory;
+  private final ClientFactory clientFactory;
 
   @PostMapping("/text/embeddings")
   ResponseEntity<ResponseDTO> embeddText(@Valid @RequestBody RequestDTO dto) {
     var prompt = new Prompt(dto.getQuery());
-    var vector = clientFactory.getEmbeddingClient(OLLAMA,null).call(prompt);
+    var vector = clientFactory.getEmbeddingClient(OLLAMA, dto).call(prompt);
     return ResponseEntity.ok(ResponseDTO.builder().vector(vector).build());
   }
 
   @PostMapping("/text/generations")
   ResponseEntity<ResponseDTO> generateText(@Valid @RequestBody RequestDTO dto) {
-    return ResponseEntity.ok(ResponseDTO.builder().output(testService.generate(dto.getQuery())).build());
+    return ResponseEntity.ok(
+        ResponseDTO.builder().output(testService.generate(dto.getQuery())).build());
   }
 
   @PostMapping("/image/embeddings")
@@ -45,8 +44,9 @@ final class LLMController {
   }
 
   @PostMapping("/image/descriptions")
-  ResponseEntity<ResponseDTO> describeImage(@Valid @ModelAttribute FileRequestDTO dto) throws IOException {
-    var description = testService.describeImage(dto.getQuery(),dto.getFile().getBytes());
+  ResponseEntity<ResponseDTO> describeImage(@Valid @ModelAttribute FileRequestDTO dto)
+      throws IOException {
+    var description = testService.describeImage(dto.getQuery(), dto.getFile().getBytes());
     return ResponseEntity.ok(ResponseDTO.builder().output(description).build());
   }
 }
