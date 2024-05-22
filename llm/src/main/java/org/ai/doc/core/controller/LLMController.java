@@ -30,7 +30,7 @@ final class LLMController {
   @PostMapping("/text/embeddings")
   ResponseEntity<ResponseDTO> embeddText(@Valid @RequestBody RequestDTO dto) {
     var prompt = new Prompt(dto.getQuery());
-    var vector = clientFactory.getEmbeddingClient(OLLAMA).call(prompt,null);
+    var vector = clientFactory.getEmbeddingClient(OLLAMA,null).call(prompt);
     return ResponseEntity.ok(ResponseDTO.builder().vector(vector).build());
   }
 
