@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 class OllamaApiConfig {
 
   //@Value("${llm.default.url}")
-  private String llmURL="test";
+  private String llmURL="http://localhost:11434";//todo!!!!!
 
   @Bean
   OllamaApi getOllamaApi() {
