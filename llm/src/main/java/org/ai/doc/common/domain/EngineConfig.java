@@ -4,13 +4,14 @@ import static java.util.stream.Collectors.toMap;
 
 import java.util.List;
 import java.util.Map;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(prefix = "llm")
-@Data
+@Setter
 public class EngineConfig {
   private Map<EngineType, Engine> engineTypeToEngine;
 
@@ -22,43 +23,26 @@ public class EngineConfig {
     return engineTypeToEngine.get(engineType);
   }
 
-  @Data
+  @Setter
+  @Getter
   public static class Engine {
     private EngineType type;
     private String url;
-    private List<Model> models;
+    private Map<ModelType, Model> modelTypeToModel;
 
-    @Data
+    public void setModels(List<Model> models) {
+      modelTypeToModel = models.stream().collect(toMap(Model::getType, model -> model));
+    }
+
+    public Model getModel(ModelType modelType) {
+      return modelTypeToModel.get(modelType);
+    }
+
+    @Setter
+    @Getter
     public static class Model {
-      private String type;
-      private TextModel text;
-      private ImageModel image;
-
-      @Data
-      public static class TextModel {
-        private EmbeddingModel embedding;
-        private GenerationModel generation;
-
-        @Data
-        public static class EmbeddingModel {
-          private String name;
-        }
-
-        @Data
-        public static class GenerationModel {
-          private String name;
-        }
-      }
-
-      @Data
-      public static class ImageModel {
-        private DescriptionModel description;
-
-        @Data
-        public static class DescriptionModel {
-          private String name;
-        }
-      }
+      private ModelType type;
+      private String name;
     }
   }
 }
