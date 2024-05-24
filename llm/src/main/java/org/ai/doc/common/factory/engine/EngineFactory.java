@@ -1,4 +1,4 @@
-package org.ai.doc.common.factory;
+package org.ai.doc.common.factory.engine;
 
 import org.ai.doc.common.domain.Engine;
 import org.ai.doc.common.domain.EngineType;

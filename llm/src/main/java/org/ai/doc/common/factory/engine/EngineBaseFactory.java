@@ -1,9 +1,10 @@
-package org.ai.doc.common.factory;
+package org.ai.doc.common.factory.engine;
 
 import static java.util.stream.Collectors.toMap;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import lombok.Setter;
 import org.ai.doc.common.domain.Engine;
 import org.ai.doc.common.domain.EngineType;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "llm")
 @Setter
-public class EngineBaseFactory implements EngineFactory {
+final class EngineBaseFactory implements EngineFactory {
   private Map<EngineType, Engine> engineTypeToEngine;
 
   public void setEngines(List<Engine> engines) {
@@ -21,6 +22,10 @@ public class EngineBaseFactory implements EngineFactory {
   }
 
   public Engine getEngine(EngineType engineType) {
-    return engineTypeToEngine.get(engineType);
+    return Optional.ofNullable(engineTypeToEngine.get(engineType))
+        .orElseThrow(
+            () ->
+                new RuntimeException(
+                    "No engine found for type " + engineType)); // todo special exception here
   }
 }

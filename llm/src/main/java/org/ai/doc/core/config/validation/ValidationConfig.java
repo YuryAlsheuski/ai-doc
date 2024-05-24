@@ -11,20 +11,16 @@ class ValidationConfig {
 
   @Bean
   LocalValidatorFactoryBean getValidator() {
-
     var bean = new LocalValidatorFactoryBean();
     bean.setValidationMessageSource(messageSource());
-
     return bean;
   }
 
   @Bean
   MessageSource messageSource() {
-
     var messageSource = new ReloadableResourceBundleMessageSource();
     messageSource.setBasename("classpath:messages");
     messageSource.setDefaultEncoding("UTF-8");
-
     return messageSource;
   }
 }

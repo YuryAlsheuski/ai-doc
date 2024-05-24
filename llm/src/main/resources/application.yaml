@@ -2,28 +2,6 @@ llm:
   engines:
     - type: ollama
       url: http://localhost:11434
-      models:
-        - type: text-embedding
-          name: nomic-embed-text:latest
-        - type: text-generation
-          name: llama3:latest
-        - type: image-description
-          name: llava:latest
-
-    - type: open-ai
-      url: http://openai:777
-      models:
-        - type: text-embedding
-          name: test-name
-        - type: text-generation
-          name: test-name1
-        - type: image-description
-          name: test-name2
-
-test:
-  engines:
-    - type: ollama
-      url: http://localhost:11434
     - type: open-ai
       url: http://openai:777
 

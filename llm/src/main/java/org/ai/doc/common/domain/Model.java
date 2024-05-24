@@ -1,11 +1,12 @@
 package org.ai.doc.common.domain;
 
 import lombok.Getter;
-import lombok.Setter;
+import lombok.RequiredArgsConstructor;
 
-@Setter
 @Getter
+@RequiredArgsConstructor
 public class Model {
-  private ModelType type;
-  private String name;
+  private final EngineType engine;
+  private final ModelType type;
+  private final String name;
 }
