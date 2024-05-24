@@ -1,7 +1,8 @@
-package org.ai.doc.common.domain;
+package org.ai.doc.common.model.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.ai.doc.common.engine.domain.EngineType;
 
 @Getter
 @RequiredArgsConstructor

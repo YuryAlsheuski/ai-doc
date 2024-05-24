@@ -1,9 +1,9 @@
 package org.ai.doc.provider.openai.provider;
 
-import static org.ai.doc.common.domain.EngineType.OPEN_AI;
+import static org.ai.doc.common.engine.domain.EngineType.OPEN_AI;
 
 import lombok.RequiredArgsConstructor;
-import org.ai.doc.common.domain.EngineType;
+import org.ai.doc.common.engine.domain.EngineType;
 import org.ai.doc.provider.common.domain.Provider;
 import org.springframework.ai.model.ModelClient;
 import org.springframework.ai.openai.api.OpenAiApi;

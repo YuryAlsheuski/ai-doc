@@ -3,7 +3,7 @@ package org.ai.doc.provider.common.config.provider;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import org.ai.doc.common.domain.EngineType;
+import org.ai.doc.common.engine.domain.EngineType;
 import org.ai.doc.provider.common.domain.Provider;
 import org.springframework.ai.chat.ChatClient;
 import org.springframework.ai.embedding.EmbeddingClient;

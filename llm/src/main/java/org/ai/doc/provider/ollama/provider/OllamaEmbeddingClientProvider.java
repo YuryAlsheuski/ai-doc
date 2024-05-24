@@ -1,6 +1,6 @@
 package org.ai.doc.provider.ollama.provider;
 
-import org.ai.doc.common.domain.Model;
+import org.ai.doc.common.model.domain.Model;
 import org.ai.doc.provider.common.converter.ModelOptionConverter;
 import org.springframework.ai.embedding.EmbeddingClient;
 import org.springframework.ai.model.ModelOptions;

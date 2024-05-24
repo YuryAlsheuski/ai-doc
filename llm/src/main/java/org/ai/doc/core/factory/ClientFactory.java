@@ -1,7 +1,7 @@
 package org.ai.doc.core.factory;
 
 import java.util.List;
-import org.ai.doc.common.domain.Model;
+import org.ai.doc.common.model.domain.Model;
 import org.ai.doc.core.domain.LLMClient;
 import org.springframework.ai.model.ModelOptions;
 

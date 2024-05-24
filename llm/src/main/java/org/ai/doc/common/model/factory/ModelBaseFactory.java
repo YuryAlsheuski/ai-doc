@@ -1,10 +1,10 @@
-package org.ai.doc.common.factory.model;
+package org.ai.doc.common.model.factory;
 
 import java.util.List;
 import lombok.Setter;
-import org.ai.doc.common.domain.EngineType;
-import org.ai.doc.common.domain.Model;
-import org.ai.doc.common.domain.ModelType;
+import org.ai.doc.common.engine.domain.EngineType;
+import org.ai.doc.common.model.domain.Model;
+import org.ai.doc.common.model.domain.ModelType;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 

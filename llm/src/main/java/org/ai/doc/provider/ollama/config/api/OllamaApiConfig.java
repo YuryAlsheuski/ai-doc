@@ -1,8 +1,8 @@
 package org.ai.doc.provider.ollama.config.api;
 
-import static org.ai.doc.common.domain.EngineType.OLLAMA;
+import static org.ai.doc.common.engine.domain.EngineType.OLLAMA;
 
-import org.ai.doc.common.factory.engine.EngineFactory;
+import org.ai.doc.common.engine.factory.EngineFactory;
 import org.springframework.ai.ollama.api.OllamaApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

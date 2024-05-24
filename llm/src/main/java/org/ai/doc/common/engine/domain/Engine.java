@@ -1,4 +1,4 @@
-package org.ai.doc.common.domain;
+package org.ai.doc.common.engine.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

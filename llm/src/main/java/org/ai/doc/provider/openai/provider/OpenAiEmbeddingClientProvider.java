@@ -3,7 +3,7 @@ package org.ai.doc.provider.openai.provider;
 import static org.springframework.ai.document.MetadataMode.EMBED;
 import static org.springframework.ai.retry.RetryUtils.DEFAULT_RETRY_TEMPLATE;
 
-import org.ai.doc.common.domain.Model;
+import org.ai.doc.common.model.domain.Model;
 import org.ai.doc.provider.common.converter.ModelOptionConverter;
 import org.springframework.ai.embedding.EmbeddingClient;
 import org.springframework.ai.model.ModelOptions;

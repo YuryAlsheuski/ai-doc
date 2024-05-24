@@ -1,7 +1,7 @@
 package org.ai.doc.provider.common.domain;
 
-import org.ai.doc.common.domain.EngineType;
-import org.ai.doc.common.domain.Model;
+import org.ai.doc.common.engine.domain.EngineType;
+import org.ai.doc.common.model.domain.Model;
 import org.springframework.ai.model.ModelClient;
 import org.springframework.ai.model.ModelOptions;
 

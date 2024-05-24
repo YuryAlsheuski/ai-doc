@@ -1,13 +1,13 @@
 package org.ai.doc.core.controller;
 
-import static org.ai.doc.common.domain.EngineType.OLLAMA;
-import static org.ai.doc.common.domain.ModelType.TEXT_EMBEDDING;
+import static org.ai.doc.common.engine.domain.EngineType.OLLAMA;
+import static org.ai.doc.common.model.domain.ModelType.TEXT_EMBEDDING;
 
 import jakarta.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.ai.doc.common.factory.model.ModelFactory;
+import org.ai.doc.common.model.factory.ModelFactory;
 import org.ai.doc.core.dto.FileModelOptionsDTO;
 import org.ai.doc.core.dto.ModelOptionsDTO;
 import org.ai.doc.core.dto.ResponseDTO;
