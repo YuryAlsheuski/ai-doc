@@ -11,6 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Setter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class FileRequestDTO extends RequestDTO {
+public class FileModelOptionsDTO extends ModelOptionsDTO {
   private MultipartFile file;//todo add validation in the future
 }

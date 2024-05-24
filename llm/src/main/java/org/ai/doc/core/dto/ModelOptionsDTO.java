@@ -13,7 +13,7 @@ import org.springframework.ai.model.ModelOptions;
 @Setter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RequestDTO implements ModelOptions {
+public class ModelOptionsDTO implements ModelOptions {
 
   @NotBlank(message = "{query.not.blank}")
   private String query;
