@@ -1,0 +1,30 @@
+package org.ai.doc.provider.openai.provider;
+
+import static org.springframework.ai.document.MetadataMode.EMBED;
+import static org.springframework.ai.retry.RetryUtils.DEFAULT_RETRY_TEMPLATE;
+
+import org.ai.doc.provider.common.converter.ModelOptionConverter;
+import org.springframework.ai.embedding.EmbeddingClient;
+import org.springframework.ai.model.ModelOptions;
+import org.springframework.ai.openai.OpenAiEmbeddingClient;
+import org.springframework.ai.openai.OpenAiEmbeddingOptions;
+import org.springframework.ai.openai.api.OpenAiApi;
+import org.springframework.stereotype.Component;
+
+@Component
+class OpenAiEmbeddingClientProvider extends OpenAiClientProvider<EmbeddingClient> {
+
+  private final ModelOptionConverter<OpenAiEmbeddingOptions> converter;
+
+  OpenAiEmbeddingClientProvider(
+      OpenAiApi api, ModelOptionConverter<OpenAiEmbeddingOptions> converter) {
+    super(api);
+    this.converter = converter;
+  }
+
+  @Override
+  public EmbeddingClient getClient(ModelOptions options) {
+    return new OpenAiEmbeddingClient(
+        api, EMBED, converter.convert(options), DEFAULT_RETRY_TEMPLATE);
+  }
+}

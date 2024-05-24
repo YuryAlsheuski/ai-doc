@@ -17,13 +17,13 @@ class ProviderConfig {
   Map<EngineType, Provider<EmbeddingClient>> getEmbeddingClientFactories(
       List<Provider<EmbeddingClient>> providers) {
 
-    return providers.stream().collect(Collectors.toMap(Provider::getType, v -> v));
+    return providers.stream().collect(Collectors.toMap(Provider::getEngineType, v -> v));
   }
 
   @Bean
   Map<EngineType, Provider<ChatClient>> getChatClientFactories(
       List<Provider<ChatClient>> providers) {
 
-    return providers.stream().collect(Collectors.toMap(Provider::getType, v -> v));
+    return providers.stream().collect(Collectors.toMap(Provider::getEngineType, v -> v));
   }
 }

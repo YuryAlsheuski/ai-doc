@@ -1,0 +1,26 @@
+package org.ai.doc.provider.openai.provider;
+
+import org.ai.doc.provider.common.converter.ModelOptionConverter;
+import org.springframework.ai.chat.ChatClient;
+import org.springframework.ai.model.ModelOptions;
+import org.springframework.ai.openai.OpenAiChatClient;
+import org.springframework.ai.openai.OpenAiChatOptions;
+import org.springframework.ai.openai.api.OpenAiApi;
+import org.springframework.stereotype.Component;
+
+@Component
+class OpenAiChatClientProvider extends OpenAiClientProvider<ChatClient> {
+
+  private final ModelOptionConverter<OpenAiChatOptions> converter;
+
+  OpenAiChatClientProvider(
+      OpenAiApi api, ModelOptionConverter<OpenAiChatOptions> converter) {
+    super(api);
+    this.converter = converter;
+  }
+
+  @Override
+  public ChatClient getClient(ModelOptions options) {
+    return new OpenAiChatClient(api, converter.convert(options));
+  }
+}
