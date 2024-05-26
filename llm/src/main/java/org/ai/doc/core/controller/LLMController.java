@@ -19,6 +19,7 @@ import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.embedding.EmbeddingResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 
 // todo add swagger
 
@@ -41,12 +42,25 @@ final class LLMController {
   }
 
   @PostMapping("/text/generations")
-  ResponseEntity<ResponseDTO> generateText(@Valid @RequestBody ModelOptionsDTO modelOptions) {
+  Object generateText(@Valid @RequestBody ModelOptionsDTO modelOptions) {
+
     var prompt = new Prompt(modelOptions.getQuery());
     var model = modelFactory.getModel(OLLAMA, TEXT_GENERATION);
-    var response = clientFactory.<ChatResponse>getClient(model).call(prompt, modelOptions);
+    var client = clientFactory.<ChatResponse>getClient(model);
+
+    var response = client.call(prompt, modelOptions);
     return ResponseEntity.ok(
         ResponseDTO.builder().output(response.getResult().getOutput().getContent()).build());
+  }
+
+  @PostMapping("/stream/text/generations")
+  Flux<ChatResponse> streamTextGeneration(@Valid @RequestBody ModelOptionsDTO modelOptions) {
+
+    var prompt = new Prompt(modelOptions.getQuery());
+    var model = modelFactory.getModel(OLLAMA, TEXT_GENERATION);
+    var client = clientFactory.<ChatResponse>getClient(model);
+
+    return client.stream(prompt, modelOptions);
   }
 
   @PostMapping("/image/embeddings")

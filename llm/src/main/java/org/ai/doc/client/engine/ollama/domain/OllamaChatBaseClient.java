@@ -39,7 +39,8 @@ final class OllamaChatBaseClient implements ChatClient, Client<ChatResponse> {
 
   @Override
   public ChatResponse call(Prompt prompt) {
-    return null;
+    var defaultOptions = OllamaOptions.create().withModel(OllamaOptions.DEFAULT_MODEL);
+    return createClient(defaultOptions).call(prompt);
   }
 
   @Override
