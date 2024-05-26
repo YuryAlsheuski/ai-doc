@@ -5,7 +5,7 @@ import static java.util.stream.Collectors.toMap;
 import java.util.List;
 import java.util.Map;
 import org.ai.doc.client.domain.Client;
-import org.ai.doc.common.domain.LLMItem;
+import org.ai.doc.common.domain.LLMEntity;
 import org.ai.doc.common.engine.domain.EngineType;
 import org.ai.doc.common.model.domain.Model;
 import org.ai.doc.common.model.domain.ModelType;
@@ -17,7 +17,7 @@ final class BaseClientFactory implements ClientFactory {
 
   private final Map<Model, Client<?>> modelToClientMap;
 
-  BaseClientFactory(ModelFactory factory, List<LLMItem> clients) {
+  BaseClientFactory(ModelFactory factory, List<LLMEntity> clients) {
     modelToClientMap =
         factory.getAll().stream()
             .collect(toMap(k -> k, v -> getClient(v.getEngineType(), v.getModelType(), clients)));
@@ -33,7 +33,7 @@ final class BaseClientFactory implements ClientFactory {
     return (Client<T>) client;
   }
 
-  private Client<?> getClient(EngineType engineType, ModelType modelType, List<LLMItem> clients) {
+  private Client<?> getClient(EngineType engineType, ModelType modelType, List<LLMEntity> clients) {
     return (Client<?>)
         clients.stream()
             .filter(
