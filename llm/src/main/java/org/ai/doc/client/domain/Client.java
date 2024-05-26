@@ -5,9 +5,14 @@ import org.ai.doc.common.engine.domain.EngineType;
 import org.ai.doc.common.model.domain.ModelType;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.model.ModelOptions;
+import org.springframework.ai.model.ModelResponse;
+import reactor.core.publisher.Flux;
 
-public interface Client<T> {
+public interface Client<T extends ModelResponse<?>> {
+
   T call(Prompt prompt, ModelOptions modelOptions);
+
+  Flux<T> stream(Prompt prompt, ModelOptions modelOptions);
 
   EngineType getEngineType();
 

@@ -9,9 +9,9 @@ llm:
     - engine: ollama
       type: text-embedding
       name: nomic-embed-text:latest
- #   - engine: ollama
- #     type: text-generation
- #     name: llama3:latest
+    - engine: ollama
+      type: text-generation
+      name: llama3:latest
  #   - engine: ollama
  #     type: image-description
  #     name: llama3:latest

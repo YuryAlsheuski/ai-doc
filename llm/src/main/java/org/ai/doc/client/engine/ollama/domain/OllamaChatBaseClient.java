@@ -14,19 +14,27 @@ import org.springframework.ai.chat.ChatClient;
 import org.springframework.ai.chat.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.model.ModelOptions;
+import org.springframework.ai.ollama.OllamaChatClient;
 import org.springframework.ai.ollama.api.OllamaApi;
+import org.springframework.ai.ollama.api.OllamaOptions;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
 
 @Component
 @RequiredArgsConstructor
-final class OllamaChatBaseClient implements ChatClient, Client<String> {
+final class OllamaChatBaseClient implements ChatClient, Client<ChatResponse> {
 
   private final OllamaApi api;
   private final ModelMapper modelMapper;
 
   @Override
-  public String call(Prompt prompt, ModelOptions modelOptions) {
-    return "";
+  public ChatResponse call(Prompt prompt, ModelOptions modelOptions) {
+    return createClient(modelOptions).call(prompt);
+  }
+
+  @Override
+  public Flux<ChatResponse> stream(Prompt prompt, ModelOptions modelOptions) {
+    return createClient(modelOptions).stream(prompt);
   }
 
   @Override
@@ -42,5 +50,10 @@ final class OllamaChatBaseClient implements ChatClient, Client<String> {
   @Override
   public Set<ModelType> getSupportedModelTypes() {
     return Set.of(TEXT_GENERATION, IMAGE_DESCRIPTION);
+  }
+
+  private OllamaChatClient createClient(ModelOptions modelOptions) {
+    var options = modelMapper.map(modelOptions, OllamaOptions.class);
+    return new OllamaChatClient(api).withDefaultOptions(options);
   }
 }

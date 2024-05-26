@@ -20,20 +20,26 @@ import org.springframework.ai.ollama.OllamaEmbeddingClient;
 import org.springframework.ai.ollama.api.OllamaApi;
 import org.springframework.ai.ollama.api.OllamaOptions;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
 
 @Component
 @RequiredArgsConstructor
 final class OllamaEmbeddingBaseClient extends AbstractEmbeddingClient
-    implements Client<List<Double>> {
+    implements Client<EmbeddingResponse> {
 
   private final OllamaApi api;
   private final ModelMapper modelMapper;
 
   @Override
-  public List<Double> call(Prompt prompt, ModelOptions modelOptions) {
+  public EmbeddingResponse call(Prompt prompt, ModelOptions modelOptions) {
     var options = modelMapper.map(modelOptions, OllamaOptions.class);
     var request = new EmbeddingRequest(List.of(prompt.getContents()), options);
-    return call(request).getResult().getOutput();
+    return call(request);
+  }
+
+  @Override
+  public Flux<EmbeddingResponse> stream(Prompt prompt, ModelOptions modelOptions) {
+    throw new UnsupportedOperationException("Stream API unsupported for embedding");
   }
 
   @Override

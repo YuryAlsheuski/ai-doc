@@ -2,6 +2,7 @@ package org.ai.doc.core.controller;
 
 import static org.ai.doc.common.engine.domain.EngineType.OLLAMA;
 import static org.ai.doc.common.model.domain.ModelType.TEXT_EMBEDDING;
+import static org.ai.doc.common.model.domain.ModelType.TEXT_GENERATION;
 
 import jakarta.validation.Valid;
 import java.io.IOException;
@@ -13,7 +14,9 @@ import org.ai.doc.common.model.factory.ModelFactory;
 import org.ai.doc.core.dto.FileModelOptionsDTO;
 import org.ai.doc.core.dto.ModelOptionsDTO;
 import org.ai.doc.core.dto.ResponseDTO;
+import org.springframework.ai.chat.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.embedding.EmbeddingResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,14 +35,18 @@ final class LLMController {
   ResponseEntity<ResponseDTO> embeddText(@Valid @RequestBody ModelOptionsDTO modelOptions) {
     var prompt = new Prompt(modelOptions.getQuery());
     var model = modelFactory.getModel(OLLAMA, TEXT_EMBEDDING);
-    var vector = clientFactory.<List<Double>>getClient(model).call(prompt, modelOptions);
+    var response = clientFactory.<EmbeddingResponse>getClient(model).call(prompt, modelOptions);
+    var vector = response.getResult().getOutput();
     return ResponseEntity.ok(ResponseDTO.builder().vector(vector).build());
   }
 
   @PostMapping("/text/generations")
   ResponseEntity<ResponseDTO> generateText(@Valid @RequestBody ModelOptionsDTO modelOptions) {
+    var prompt = new Prompt(modelOptions.getQuery());
+    var model = modelFactory.getModel(OLLAMA, TEXT_GENERATION);
+    var response = clientFactory.<ChatResponse>getClient(model).call(prompt, modelOptions);
     return ResponseEntity.ok(
-        ResponseDTO.builder().output(testService.generate(modelOptions.getQuery())).build());
+        ResponseDTO.builder().output(response.getResult().getOutput().getContent()).build());
   }
 
   @PostMapping("/image/embeddings")

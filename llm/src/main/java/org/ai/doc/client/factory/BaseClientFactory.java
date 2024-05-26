@@ -9,6 +9,7 @@ import org.ai.doc.common.engine.domain.EngineType;
 import org.ai.doc.common.model.domain.Model;
 import org.ai.doc.common.model.domain.ModelType;
 import org.ai.doc.common.model.factory.ModelFactory;
+import org.springframework.ai.model.ModelResponse;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -24,7 +25,7 @@ final class BaseClientFactory implements ClientFactory {
 
   @Override
   @SuppressWarnings("unchecked")
-  public <T> Client<T> getClient(Model model) {
+  public <T extends ModelResponse<?>> Client<T> getClient(Model model) {
     var client = modelToClientMap.get(model);
     if (client == null) {
       throw new RuntimeException(); // todo personal here
@@ -33,13 +34,12 @@ final class BaseClientFactory implements ClientFactory {
   }
 
   private Client<?> getClient(EngineType engineType, ModelType modelType, List<Client<?>> clients) {
-    return (Client<?>)
-        clients.stream()
-            .filter(
-                client ->
-                    client.getEngineType() == engineType
-                        && client.getSupportedModelTypes().contains(modelType))
-            .findFirst()
-            .orElseThrow(RuntimeException::new); // todo personal exception here
+    return clients.stream()
+        .filter(
+            client ->
+                client.getEngineType() == engineType
+                    && client.getSupportedModelTypes().contains(modelType))
+        .findFirst()
+        .orElseThrow(RuntimeException::new); // todo personal exception here
   }
 }
