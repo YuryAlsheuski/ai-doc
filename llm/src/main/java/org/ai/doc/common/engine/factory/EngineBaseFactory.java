@@ -2,9 +2,9 @@ package org.ai.doc.common.engine.factory;
 
 import static java.util.stream.Collectors.toMap;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import lombok.Setter;
 import org.ai.doc.common.engine.domain.Engine;
 import org.ai.doc.common.engine.domain.EngineType;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 final class EngineBaseFactory implements EngineFactory {
   private Map<EngineType, Engine> engineTypeToEngine;
 
-  public void setEngines(List<Engine> engines) {
+  public void setEngines(Set<Engine> engines) {
     engineTypeToEngine = engines.stream().collect(toMap(Engine::getType, engine -> engine));
   }
 

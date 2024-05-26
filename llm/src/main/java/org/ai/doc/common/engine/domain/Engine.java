@@ -1,10 +1,8 @@
 package org.ai.doc.common.engine.domain;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Data;
 
-@Getter
-@RequiredArgsConstructor
+@Data
 public class Engine {
   private final EngineType type;
   private final String url;

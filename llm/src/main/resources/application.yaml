@@ -9,21 +9,21 @@ llm:
     - engine: ollama
       type: text-embedding
       name: nomic-embed-text:latest
-    - engine: ollama
-      type: text-generation
-      name: llama3:latest
-    - engine: ollama
-      type: image-description
-      name: llama3:latest
+ #   - engine: ollama
+ #     type: text-generation
+ #     name: llama3:latest
+ #   - engine: ollama
+ #     type: image-description
+ #     name: llama3:latest
     - engine: open-ai
       type: text-embedding
       name: test1
-    - engine: open-ai
-      type: text-generation
-      name: test2
-    - engine: open-ai
-      type: image-description
-      name: test3
+ #   - engine: open-ai
+ #     type: text-generation
+ #     name: test2
+ #   - engine: open-ai
+ #     type: image-description
+ #     name: test3
 
 
 

@@ -7,12 +7,12 @@ import jakarta.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.ai.doc.client.factory.ClientFactory;
+import org.ai.doc.client.factory.TestService;
 import org.ai.doc.common.model.factory.ModelFactory;
 import org.ai.doc.core.dto.FileModelOptionsDTO;
 import org.ai.doc.core.dto.ModelOptionsDTO;
 import org.ai.doc.core.dto.ResponseDTO;
-import org.ai.doc.core.factory.ClientFactory;
-import org.ai.doc.core.factory.TestService;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +32,7 @@ final class LLMController {
   ResponseEntity<ResponseDTO> embeddText(@Valid @RequestBody ModelOptionsDTO modelOptions) {
     var prompt = new Prompt(modelOptions.getQuery());
     var model = modelFactory.getModel(OLLAMA, TEXT_EMBEDDING);
-    var vector = clientFactory.getEmbeddingClient(model, modelOptions).call(prompt);
+    var vector = clientFactory.<List<Double>>getClient(model).call(prompt, modelOptions);
     return ResponseEntity.ok(ResponseDTO.builder().vector(vector).build());
   }
 

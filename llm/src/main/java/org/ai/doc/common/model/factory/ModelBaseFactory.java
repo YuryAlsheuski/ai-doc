@@ -1,6 +1,6 @@
 package org.ai.doc.common.model.factory;
 
-import java.util.List;
+import java.util.Set;
 import lombok.Setter;
 import org.ai.doc.common.engine.domain.EngineType;
 import org.ai.doc.common.model.domain.Model;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "llm")
 @Setter
 final class ModelBaseFactory implements ModelFactory {
-  private List<Model> models;
+  private Set<Model> models;
 
   @Override
   public Model getModel(EngineType engineType, ModelType modelType, String modelName) {
@@ -22,8 +22,13 @@ final class ModelBaseFactory implements ModelFactory {
   @Override
   public Model getModel(EngineType engineType, ModelType modelType) {
     return models.stream()
-        .filter(model -> model.getEngine() == engineType && model.getType() == modelType)
+        .filter(model -> model.getEngineType() == engineType && model.getModelType() == modelType)
         .findFirst()
         .orElseThrow(RuntimeException::new); // todo special error here
+  }
+
+  @Override
+  public Set<Model> getAll() {
+    return Set.copyOf(models);
   }
 }
