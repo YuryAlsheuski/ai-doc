@@ -22,7 +22,7 @@ final class ModelBaseFactory implements ModelFactory {
   @Override
   public Model getModel(EngineType engineType, ModelType modelType) {
     return models.stream()
-        .filter(model -> model.getEngineType() == engineType && model.getModelType() == modelType)
+        .filter(model -> model.getEngine() == engineType && model.getType() == modelType)
         .findFirst()
         .orElseThrow(RuntimeException::new); // todo special error here
   }

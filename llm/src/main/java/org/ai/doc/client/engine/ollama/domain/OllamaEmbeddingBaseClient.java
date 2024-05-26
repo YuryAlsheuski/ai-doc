@@ -4,6 +4,7 @@ import static org.ai.doc.common.engine.domain.EngineType.OLLAMA;
 import static org.ai.doc.common.model.domain.ModelType.TEXT_EMBEDDING;
 
 import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.ai.doc.client.domain.Client;
 import org.ai.doc.common.engine.domain.EngineType;
@@ -55,7 +56,7 @@ final class OllamaEmbeddingBaseClient extends AbstractEmbeddingClient
   }
 
   @Override
-  public ModelType getModelType() {
-    return TEXT_EMBEDDING;
+  public Set<ModelType> getSupportedModelTypes() {
+    return Set.of(TEXT_EMBEDDING);
   }
 }

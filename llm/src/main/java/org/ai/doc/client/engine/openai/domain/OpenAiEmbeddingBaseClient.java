@@ -6,6 +6,7 @@ import static org.springframework.ai.document.MetadataMode.EMBED;
 import static org.springframework.ai.retry.RetryUtils.DEFAULT_RETRY_TEMPLATE;
 
 import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.ai.doc.client.domain.Client;
 import org.ai.doc.common.engine.domain.EngineType;
@@ -59,7 +60,7 @@ final class OpenAiEmbeddingBaseClient extends AbstractEmbeddingClient
   }
 
   @Override
-  public ModelType getModelType() {
-    return TEXT_EMBEDDING;
+  public Set<ModelType> getSupportedModelTypes() {
+    return Set.of(TEXT_EMBEDDING);
   }
 }

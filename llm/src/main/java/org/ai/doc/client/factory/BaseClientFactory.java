@@ -5,7 +5,6 @@ import static java.util.stream.Collectors.toMap;
 import java.util.List;
 import java.util.Map;
 import org.ai.doc.client.domain.Client;
-import org.ai.doc.common.domain.LLMEntity;
 import org.ai.doc.common.engine.domain.EngineType;
 import org.ai.doc.common.model.domain.Model;
 import org.ai.doc.common.model.domain.ModelType;
@@ -17,10 +16,10 @@ final class BaseClientFactory implements ClientFactory {
 
   private final Map<Model, Client<?>> modelToClientMap;
 
-  BaseClientFactory(ModelFactory factory, List<LLMEntity> clients) {
+  BaseClientFactory(ModelFactory factory, List<Client<?>> clients) {
     modelToClientMap =
         factory.getAll().stream()
-            .collect(toMap(k -> k, v -> getClient(v.getEngineType(), v.getModelType(), clients)));
+            .collect(toMap(k -> k, v -> getClient(v.getEngine(), v.getType(), clients)));
   }
 
   @Override
@@ -33,12 +32,13 @@ final class BaseClientFactory implements ClientFactory {
     return (Client<T>) client;
   }
 
-  private Client<?> getClient(EngineType engineType, ModelType modelType, List<LLMEntity> clients) {
+  private Client<?> getClient(EngineType engineType, ModelType modelType, List<Client<?>> clients) {
     return (Client<?>)
         clients.stream()
             .filter(
                 client ->
-                    client.getEngineType() == engineType && client.getModelType() == modelType)
+                    client.getEngineType() == engineType
+                        && client.getSupportedModelTypes().contains(modelType))
             .findFirst()
             .orElseThrow(RuntimeException::new); // todo personal exception here
   }
