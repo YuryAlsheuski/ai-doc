@@ -14,10 +14,8 @@ import org.springframework.ai.model.ModelOptions;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ModelOptionsDTO implements ModelOptions {
-
-  @NotBlank(message = "{query.not.blank}")
-  private String query;
-
+  //todo - reimplement "raw" option because of standard spring does not know about it at all =(
+  @NotBlank(message = "{model.name.not.blank}")
   private String model;
   private Double temperature;
   private Integer topK;
