@@ -17,15 +17,19 @@ def lombokVersion = '1.18.30'
 def modelmapperVersion='3.1.1'
 
 dependencies {
-    implementation "org.springframework.boot:spring-boot-starter-web"
-    implementation "org.springframework.boot:spring-boot-starter-validation"
-    implementation 'org.springframework.ai:spring-ai-ollama:0.8.1'
-    implementation 'org.springframework.ai:spring-ai-openai:0.8.1'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.ai:spring-ai-ollama:1.0.0-M1'
+    implementation 'org.springframework.ai:spring-ai-openai:1.0.0-M1'
+
+    implementation 'org.apache.commons:commons-lang3:3.14.0'
 
     implementation "org.modelmapper:modelmapper:${modelmapperVersion}"
 
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    runtimeOnly "io.netty:netty-resolver-dns-native-macos:4.1.72.Final:osx-aarch_64"
 }
 
 test {

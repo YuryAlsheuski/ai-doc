@@ -10,11 +10,10 @@ import org.ai.doc.client.domain.Client;
 import org.ai.doc.common.engine.domain.EngineType;
 import org.ai.doc.common.model.domain.ModelType;
 import org.modelmapper.ModelMapper;
-import org.springframework.ai.chat.ChatClient;
-import org.springframework.ai.chat.ChatResponse;
+import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.model.ModelOptions;
-import org.springframework.ai.ollama.OllamaChatClient;
+import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.ai.ollama.api.OllamaApi;
 import org.springframework.ai.ollama.api.OllamaOptions;
 import org.springframework.stereotype.Component;
@@ -22,7 +21,7 @@ import reactor.core.publisher.Flux;
 
 @Component
 @RequiredArgsConstructor
-final class OllamaChatBaseClient implements ChatClient, Client<ChatResponse> {
+final class OllamaChatClient implements Client<ChatResponse> {
 
   private final OllamaApi api;
   private final ModelMapper modelMapper;
@@ -38,12 +37,6 @@ final class OllamaChatBaseClient implements ChatClient, Client<ChatResponse> {
   }
 
   @Override
-  public ChatResponse call(Prompt prompt) {
-    var defaultOptions = OllamaOptions.create().withModel(OllamaOptions.DEFAULT_MODEL);
-    return createClient(defaultOptions).call(prompt);
-  }
-
-  @Override
   public EngineType getEngineType() {
     return OLLAMA;
   }
@@ -53,8 +46,8 @@ final class OllamaChatBaseClient implements ChatClient, Client<ChatResponse> {
     return Set.of(TEXT_GENERATION, IMAGE_DESCRIPTION);
   }
 
-  private OllamaChatClient createClient(ModelOptions modelOptions) {
+  private OllamaChatModel createClient(ModelOptions modelOptions) {
     var options = modelMapper.map(modelOptions, OllamaOptions.class);
-    return new OllamaChatClient(api).withDefaultOptions(options);
+    return new OllamaChatModel(api, options);
   }
 }

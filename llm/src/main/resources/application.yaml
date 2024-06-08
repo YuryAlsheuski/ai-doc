@@ -12,9 +12,9 @@ llm:
     - engine: ollama
       type: text-generation
       name: llama3:latest
- #   - engine: ollama
- #     type: image-description
- #     name: llama3:latest
+    - engine: ollama
+      type: image-description
+      name: llava:latest
     - engine: open-ai
       type: text-embedding
       name: test1
@@ -24,6 +24,10 @@ llm:
  #   - engine: open-ai
  #     type: image-description
  #     name: test3
+
+spring:
+  codec:
+    max-in-memory-size: 10MB
 
 
 
