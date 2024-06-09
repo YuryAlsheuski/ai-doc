@@ -3,16 +3,17 @@ package org.ai.doc.core.controller;
 // todo add swagger
 
 import static org.ai.doc.common.engine.domain.EngineType.OLLAMA;
-import static org.ai.doc.common.model.domain.ModelType.IMAGE_DESCRIPTION;
 import static org.ai.doc.common.model.domain.ModelType.TEXT_GENERATION;
 import static org.apache.commons.lang3.ArrayUtils.toPrimitive;
 
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.function.Function;
 import lombok.RequiredArgsConstructor;
 import org.ai.doc.client.factory.ClientFactory;
 import org.ai.doc.common.model.domain.Model;
 import org.ai.doc.common.model.factory.ModelFactory;
+import org.ai.doc.core.dto.ChatResponseDTO;
 import org.ai.doc.core.dto.PromptDTO;
 import org.springframework.ai.chat.messages.Media;
 import org.springframework.ai.chat.messages.UserMessage;
@@ -36,7 +37,7 @@ public class GenerationController {
   private final ModelFactory modelFactory;
 
   @PostMapping("/text/generations")
-  CorePublisher<?> generate(
+  CorePublisher<ChatResponseDTO> generate(
       @Valid @RequestBody PromptDTO dto, @RequestParam(defaultValue = "false") String stream) {
 
     var model = getModel(dto);
@@ -45,27 +46,48 @@ public class GenerationController {
     var client = clientFactory.<ChatResponse>getClient(model);
 
     if (Boolean.parseBoolean(stream)) {
-      return client.stream(prompt, dto.getModelOptions());
+      return client.stream(prompt, dto.getModelOptions()).map(parse());
     }
     var response = client.call(prompt, dto.getModelOptions());
-    /*var responseDTO =
-        ResponseDTO.builder().output(response.getResult().getOutput().getContent()).build();*/ //todo think about custom object with mapper inside;
-    return Mono.just(response);
+    return Mono.just(parse().apply(response));
+  }
+
+  private Function<ChatResponse, ChatResponseDTO> parse() {
+    return response -> {
+      var result = response.getResult();
+      var usage = response.getMetadata().getUsage();
+
+      var done = result.getMetadata().getFinishReason() != null;
+      var content = result.getOutput().getContent();
+
+      var responsePromptTokens = usage.getPromptTokens();
+      var promptTokens = responsePromptTokens == 0 ? null : responsePromptTokens;
+
+      var responseGenerationTokes = usage.getGenerationTokens();
+      var replyTokens = responseGenerationTokes == 0 ? null : responseGenerationTokes;
+
+      return ChatResponseDTO.builder()
+          .done(done)
+          .content(content)
+          .promptTokens(promptTokens)
+          .replyTokens(replyTokens)
+          .build();
+    };
   }
 
   private Prompt getPrompt(PromptDTO dto) {
-    var content = dto.getContent();
-    if (content != null && content.length > 0) {
-      var resource = new ByteArrayResource(toPrimitive(content));
-      var media = List.of(new Media(MimeTypeUtils.IMAGE_JPEG, resource));
+    var requestMedia = dto.getMedia();
+    if (requestMedia != null) {
+      var resource = new ByteArrayResource(toPrimitive(requestMedia.getContent()));
+      var media = List.of(new Media(MimeTypeUtils.ALL, resource));
       return new Prompt(new UserMessage(dto.getQuery(), media));
     }
     return new Prompt(new UserMessage(dto.getQuery()));
   }
 
   private Model getModel(PromptDTO dto) {
-    var content = dto.getContent();
-    var modelType = content != null && content.length > 0 ? IMAGE_DESCRIPTION : TEXT_GENERATION;
+    var requestMedia = dto.getMedia();
+    var modelType = requestMedia == null ? TEXT_GENERATION : requestMedia.getType().getModelType();
     return modelFactory.getModel(OLLAMA, modelType);
   }
 }

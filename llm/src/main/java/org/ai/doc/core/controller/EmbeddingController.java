@@ -9,8 +9,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.ai.doc.client.factory.ClientFactory;
 import org.ai.doc.common.model.factory.ModelFactory;
+import org.ai.doc.core.dto.EmbeddingResponseDTO;
 import org.ai.doc.core.dto.PromptDTO;
-import org.ai.doc.core.dto.ResponseDTO;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.embedding.EmbeddingResponse;
 import org.springframework.http.ResponseEntity;
@@ -27,12 +27,13 @@ public class EmbeddingController {
   private final ModelFactory modelFactory;
 
   @PostMapping("/embeddings")
-  ResponseEntity<ResponseDTO> embedd(@Valid @RequestBody PromptDTO dto) {
+  ResponseEntity<EmbeddingResponseDTO> embedd(@Valid @RequestBody PromptDTO dto) {
     var prompt = new Prompt(dto.getQuery());
     var model = modelFactory.getModel(OLLAMA, TEXT_EMBEDDING);
     var response =
         clientFactory.<EmbeddingResponse>getClient(model).call(prompt, dto.getModelOptions());
     var vector = response.getResult().getOutput();
-    return ResponseEntity.ok(ResponseDTO.builder().vector(vector).build());
+    var responseDTO = EmbeddingResponseDTO.builder().vector(vector).size(vector.size()).build();
+    return ResponseEntity.ok(responseDTO);
   }
 }
