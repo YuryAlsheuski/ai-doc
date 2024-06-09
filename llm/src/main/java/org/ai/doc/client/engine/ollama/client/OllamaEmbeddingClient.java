@@ -1,4 +1,4 @@
-package org.ai.doc.client.engine.ollama.domain;
+package org.ai.doc.client.engine.ollama.client;
 
 import static org.ai.doc.common.engine.domain.EngineType.OLLAMA;
 import static org.ai.doc.common.model.domain.ModelType.TEXT_EMBEDDING;
