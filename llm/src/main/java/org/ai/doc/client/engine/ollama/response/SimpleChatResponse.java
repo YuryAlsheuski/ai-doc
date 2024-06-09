@@ -1,4 +1,4 @@
-package org.ai.doc.client.common.response;
+package org.ai.doc.client.engine.ollama.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;

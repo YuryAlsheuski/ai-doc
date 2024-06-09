@@ -1,51 +1,49 @@
 package org.ai.doc.client.engine.ollama.model;
 
 import static org.springframework.ai.ollama.api.OllamaApi.Message.Role.USER;
-import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
 
 import java.util.Base64;
 import lombok.RequiredArgsConstructor;
-import org.ai.doc.client.common.response.SimpleChatResponse;
+import org.ai.doc.client.engine.ollama.response.SimpleChatResponse;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.ollama.api.OllamaApi;
 import org.springframework.ai.ollama.api.OllamaApi.ChatRequest;
 import org.springframework.ai.ollama.api.OllamaOptions;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import reactor.core.publisher.Flux;
 
+// Customized because of bad and slow response content for standard ollama spring chat model.
 @Component
-@Scope(SCOPE_PROTOTYPE)
 @RequiredArgsConstructor
 public class OllamaChatModel {
 
   private final OllamaApi api;
-  private final OllamaOptions modelOptions;
 
-  public ChatResponse call(Prompt prompt) {
+  public ChatResponse call(Prompt prompt, OllamaOptions options) {
 
-    var request = buildRequest(prompt, false);
+    var request = buildRequest(options, prompt, false);
     var response = api.chat(request);
 
     return new SimpleChatResponse(response.done(), response.message().content());
   }
 
-  public Flux<ChatResponse> stream(Prompt prompt) {
+  public Flux<ChatResponse> stream(Prompt prompt, OllamaOptions options) {
 
-    var request = buildRequest(prompt, true);
+    var request = buildRequest(options, prompt, true);
     var response = api.streamingChat(request);
 
     return response.map(chunk -> new SimpleChatResponse(chunk.done(), chunk.message().content()));
   }
 
-  private ChatRequest buildRequest(Prompt prompt, boolean streaming) {
+  private ChatRequest buildRequest(OllamaOptions options, Prompt prompt, boolean streaming) {
+
     var ollamaMessages = prompt.getInstructions().stream().map(this::convertMessage).toList();
 
-    return ChatRequest.builder(modelOptions.getModel())
-        .withOptions(modelOptions)
+    return ChatRequest.builder(options.getModel())
+        .withOptions(options)
         .withMessages(ollamaMessages)
         .withStream(streaming)
         .build();

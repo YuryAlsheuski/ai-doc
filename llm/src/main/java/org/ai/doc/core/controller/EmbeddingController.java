@@ -2,6 +2,9 @@ package org.ai.doc.core.controller;
 
 // todo add swagger
 
+import static org.ai.doc.common.engine.domain.EngineType.OLLAMA;
+import static org.ai.doc.common.model.domain.ModelType.TEXT_EMBEDDING;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.ai.doc.client.factory.ClientFactory;
@@ -15,9 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import static org.ai.doc.common.engine.domain.EngineType.OLLAMA;
-import static org.ai.doc.common.model.domain.ModelType.TEXT_EMBEDDING;
 
 @RestController
 @RequiredArgsConstructor
