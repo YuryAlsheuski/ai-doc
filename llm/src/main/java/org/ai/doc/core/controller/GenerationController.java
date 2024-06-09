@@ -14,7 +14,6 @@ import org.ai.doc.client.factory.ClientFactory;
 import org.ai.doc.common.model.domain.Model;
 import org.ai.doc.common.model.factory.ModelFactory;
 import org.ai.doc.core.dto.PromptDTO;
-import org.ai.doc.core.dto.ResponseDTO;
 import org.springframework.ai.chat.messages.Media;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatResponse;
@@ -46,15 +45,12 @@ public class GenerationController {
     var client = clientFactory.<ChatResponse>getClient(model);
 
     if (Boolean.parseBoolean(stream)) {
-      return client.stream(
-          prompt,
-          dto.getModelOptions()); // todo looks like stupid standard response dto- need to set own
-      // here
+      return client.stream(prompt, dto.getModelOptions());
     }
     var response = client.call(prompt, dto.getModelOptions());
-    var responseDTO =
-        ResponseDTO.builder().output(response.getResult().getOutput().getContent()).build();
-    return Mono.just(responseDTO);
+    /*var responseDTO =
+        ResponseDTO.builder().output(response.getResult().getOutput().getContent()).build();*/ //todo think about custom object with mapper inside;
+    return Mono.just(response);
   }
 
   private Prompt getPrompt(PromptDTO dto) {

@@ -8,12 +8,12 @@ import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.model.Generation;
 
 @Getter
-public class StreamingChatResponse extends ChatResponse {
+public class SimpleChatResponse extends ChatResponse {
 
   private final boolean done;
   private final String content;
 
-  public StreamingChatResponse(boolean done,String content) {
+  public SimpleChatResponse(boolean done, String content) {
     super(List.of());
     this.done = done;
     this.content = content;
@@ -36,5 +36,4 @@ public class StreamingChatResponse extends ChatResponse {
   public ChatResponseMetadata getMetadata() {
     return super.getMetadata();
   }
-
 }

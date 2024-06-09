@@ -1,4 +1,4 @@
-package org.ai.doc.client.engine.openai.domain;
+package org.ai.doc.client.engine.openai.client;
 
 import static org.ai.doc.common.engine.domain.EngineType.OPEN_AI;
 import static org.ai.doc.common.model.domain.ModelType.TEXT_EMBEDDING;
