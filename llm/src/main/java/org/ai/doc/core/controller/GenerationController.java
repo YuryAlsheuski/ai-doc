@@ -40,7 +40,7 @@ public class GenerationController {
   CorePublisher<ChatResponseDTO> generate(
       @Valid @RequestBody PromptDTO dto, @RequestParam(defaultValue = "false") String stream) {
 
-    var model = getModel(dto);
+    var model = getModel(dto);//todo - here model name from config but inside the other layers uses name from DTO
     var prompt = getPrompt(dto);
 
     var client = clientFactory.<ChatResponse>getClient(model);
