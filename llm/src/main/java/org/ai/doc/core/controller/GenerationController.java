@@ -4,23 +4,16 @@ package org.ai.doc.core.controller;
 
 import static org.ai.doc.common.engine.domain.EngineType.OLLAMA;
 import static org.ai.doc.common.model.domain.ModelType.TEXT_GENERATION;
-import static org.apache.commons.lang3.ArrayUtils.toPrimitive;
 
 import jakarta.validation.Valid;
-import java.util.List;
 import java.util.function.Function;
 import lombok.RequiredArgsConstructor;
 import org.ai.doc.client.factory.ClientFactory;
-import org.ai.doc.common.model.domain.Model;
-import org.ai.doc.common.model.factory.ModelFactory;
+import org.ai.doc.core.converter.ModelOptionsDTOConverter;
+import org.ai.doc.core.converter.PromptDTOConverter;
 import org.ai.doc.core.dto.ChatResponseDTO;
 import org.ai.doc.core.dto.PromptDTO;
-import org.springframework.ai.chat.messages.Media;
-import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatResponse;
-import org.springframework.ai.chat.prompt.Prompt;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,22 +26,28 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 @RequestMapping(path = "/api/v1/llm")
 public class GenerationController {
+
   private final ClientFactory clientFactory;
-  private final ModelFactory modelFactory;
+  private final PromptDTOConverter promptConverter;
+  private final ModelOptionsDTOConverter modelOptionsConverter;
 
   @PostMapping("/text/generations")
   CorePublisher<ChatResponseDTO> generate(
       @Valid @RequestBody PromptDTO dto, @RequestParam(defaultValue = "false") String stream) {
 
-    var model = getModel(dto);//todo - here model name from config but inside the other layers uses name from DTO
-    var prompt = getPrompt(dto);
+    var requestMedia = dto.getMedia();
+    var modelType = requestMedia == null ? TEXT_GENERATION : requestMedia.getType().getModelType();
+    var model = modelOptionsConverter.toModel(dto.getModelOptions(), OLLAMA, modelType);
+    var modelOptions = modelOptionsConverter.toModelOptions(dto.getModelOptions(), model.getName());
+
+    var prompt = promptConverter.toPrompt(dto);
 
     var client = clientFactory.<ChatResponse>getClient(model);
 
     if (Boolean.parseBoolean(stream)) {
-      return client.stream(prompt, dto.getModelOptions()).map(parse());
+      return client.stream(prompt, modelOptions).map(parse());
     }
-    var response = client.call(prompt, dto.getModelOptions());
+    var response = client.call(prompt, modelOptions);
     return Mono.just(parse().apply(response));
   }
 
@@ -73,21 +72,5 @@ public class GenerationController {
           .replyTokens(replyTokens)
           .build();
     };
-  }
-
-  private Prompt getPrompt(PromptDTO dto) {
-    var requestMedia = dto.getMedia();
-    if (requestMedia != null) {
-      var resource = new ByteArrayResource(toPrimitive(requestMedia.getContent()));
-      var media = List.of(new Media(MimeTypeUtils.ALL, resource));
-      return new Prompt(new UserMessage(dto.getQuery(), media));
-    }
-    return new Prompt(new UserMessage(dto.getQuery()));
-  }
-
-  private Model getModel(PromptDTO dto) {
-    var requestMedia = dto.getMedia();
-    var modelType = requestMedia == null ? TEXT_GENERATION : requestMedia.getType().getModelType();
-    return modelFactory.getModel(OLLAMA, modelType);
   }
 }

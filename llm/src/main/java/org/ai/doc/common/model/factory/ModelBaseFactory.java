@@ -1,10 +1,12 @@
 package org.ai.doc.common.model.factory;
 
+import java.text.MessageFormat;
 import java.util.Set;
 import lombok.Setter;
 import org.ai.doc.common.engine.domain.EngineType;
 import org.ai.doc.common.model.domain.Model;
 import org.ai.doc.common.model.domain.ModelType;
+import org.ai.doc.core.exception.ModelNotFoundException;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -12,19 +14,31 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "llm")
 @Setter
 final class ModelBaseFactory implements ModelFactory {
+
   private Set<Model> models;
 
   @Override
   public Model getModel(EngineType engineType, ModelType modelType, String modelName) {
-    return null;
+    return models.stream()
+        .filter(
+            model ->
+                model.getEngine() == engineType
+                    && model.getType() == modelType
+                    && (modelName == null || model.getName().equals(modelName)))
+        .findFirst()
+        .orElseThrow(
+            () -> {
+              var message =
+                  MessageFormat.format(
+                      "Model not found! Model name = {0}, model type = {1}, engine = {2}",
+                      modelName, modelType, engineType);
+              return new ModelNotFoundException(message);
+            });
   }
 
   @Override
   public Model getModel(EngineType engineType, ModelType modelType) {
-    return models.stream()
-        .filter(model -> model.getEngine() == engineType && model.getType() == modelType)
-        .findFirst()
-        .orElseThrow(RuntimeException::new); // todo special error here
+    return getModel(engineType, modelType, null);
   }
 
   @Override

@@ -14,6 +14,7 @@ import org.ai.doc.core.domain.ContentType;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MediaDTO { // todo add validation in the future
+
   @NotNull(message = "{media.type.not.null}")
   private ContentType type;
 
