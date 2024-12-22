@@ -32,6 +32,7 @@ public class GenerationController {
   private final ModelOptionsDTOConverter modelOptionsConverter;
 
   @PostMapping("/text/generations")
+  @SuppressWarnings("ReactiveStreamsUnusedPublisher")
   CorePublisher<ChatResponseDTO> generate(
       @Valid @RequestBody PromptDTO dto, @RequestParam(defaultValue = "false") String stream) {
 
