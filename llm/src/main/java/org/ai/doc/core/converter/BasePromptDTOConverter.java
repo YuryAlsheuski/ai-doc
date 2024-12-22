@@ -12,7 +12,7 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PromptDTOConverterV1 implements PromptDTOConverter {
+public class BasePromptDTOConverter implements PromptDTOConverter {
 
   @Override
   public Prompt toPrompt(PromptDTO dto) {

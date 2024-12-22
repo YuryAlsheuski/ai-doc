@@ -6,6 +6,7 @@ import org.ai.doc.model.domain.Model;
 import org.ai.doc.model.domain.ModelType;
 
 public interface ModelFactory {
+
   Model getModel(EngineType engineType, ModelType modelType, String modelName);
 
   Model getModel(EngineType engineType, ModelType modelType);

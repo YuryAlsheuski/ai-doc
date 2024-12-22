@@ -1,17 +1,17 @@
 package org.ai.doc.core.converter;
 
 import lombok.RequiredArgsConstructor;
+import org.ai.doc.core.dto.ModelOptionsDTO;
 import org.ai.doc.model.domain.EngineType;
 import org.ai.doc.model.domain.Model;
 import org.ai.doc.model.domain.ModelType;
 import org.ai.doc.model.factory.ModelFactory;
-import org.ai.doc.core.dto.ModelOptionsDTO;
 import org.springframework.ai.model.ModelOptions;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class ModelOptionsDTOConverterV1 implements ModelOptionsDTOConverter {
+public class BaseModelOptionsDTOConverter implements ModelOptionsDTOConverter {
 
   private final ModelFactory modelFactory;
 
