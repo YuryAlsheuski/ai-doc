@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping(path = "/api/v1/llm")
 public class EmbeddingController {
+
   private final ClientFactory clientFactory;
   private final ModelFactory modelFactory;
 
