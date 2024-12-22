@@ -1,9 +1,8 @@
-package org.ai.doc.common.model.domain;
+package org.ai.doc.model.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.ai.doc.common.engine.domain.EngineType;
 
 @RequiredArgsConstructor
 @EqualsAndHashCode

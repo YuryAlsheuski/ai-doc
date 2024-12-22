@@ -2,8 +2,8 @@ package org.ai.doc.core.controller;
 
 // todo add swagger
 
-import static org.ai.doc.common.engine.domain.EngineType.OLLAMA;
-import static org.ai.doc.common.model.domain.ModelType.TEXT_GENERATION;
+import static org.ai.doc.model.domain.EngineType.OLLAMA;
+import static org.ai.doc.model.domain.ModelType.TEXT_GENERATION;
 
 import jakarta.validation.Valid;
 import java.util.function.Function;

@@ -1,4 +1,4 @@
-package org.ai.doc.common.engine.factory;
+package org.ai.doc.model.factory;
 
 import static java.util.stream.Collectors.toMap;
 
@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import lombok.Setter;
-import org.ai.doc.common.engine.domain.Engine;
-import org.ai.doc.common.engine.domain.EngineType;
+import org.ai.doc.model.domain.Engine;
+import org.ai.doc.model.domain.EngineType;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 

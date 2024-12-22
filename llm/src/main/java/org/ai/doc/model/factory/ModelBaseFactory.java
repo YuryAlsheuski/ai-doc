@@ -1,12 +1,12 @@
-package org.ai.doc.common.model.factory;
+package org.ai.doc.model.factory;
 
 import java.text.MessageFormat;
 import java.util.Set;
 import lombok.Setter;
-import org.ai.doc.common.engine.domain.EngineType;
-import org.ai.doc.common.model.domain.Model;
-import org.ai.doc.common.model.domain.ModelType;
-import org.ai.doc.core.exception.ModelNotFoundException;
+import org.ai.doc.model.domain.EngineType;
+import org.ai.doc.model.exception.ModelNotFoundException;
+import org.ai.doc.model.domain.Model;
+import org.ai.doc.model.domain.ModelType;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 

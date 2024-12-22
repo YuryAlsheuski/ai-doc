@@ -1,8 +1,8 @@
 package org.ai.doc.client.domain;
 
 import java.util.Set;
-import org.ai.doc.common.engine.domain.EngineType;
-import org.ai.doc.common.model.domain.ModelType;
+import org.ai.doc.model.domain.EngineType;
+import org.ai.doc.model.domain.ModelType;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.model.ModelOptions;
 import org.springframework.ai.model.ModelResponse;

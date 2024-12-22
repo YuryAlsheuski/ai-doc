@@ -1,4 +1,4 @@
-package org.ai.doc.common.engine.domain;
+package org.ai.doc.model.domain;
 
 import lombok.Data;
 
