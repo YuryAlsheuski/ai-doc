@@ -1,4 +1,4 @@
-package org.ai.doc.common.model.domain;
+package org.ai.doc.model.domain;
 
 public enum ModelType {
   TEXT_EMBEDDING,

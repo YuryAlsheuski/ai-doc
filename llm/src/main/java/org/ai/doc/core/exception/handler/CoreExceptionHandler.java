@@ -4,7 +4,6 @@ import static java.util.stream.Collectors.toList;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 import java.util.List;
-import org.ai.doc.core.exception.ModelNotFoundException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -20,11 +19,5 @@ public class CoreExceptionHandler {
     return exception.getAllErrors().stream()
         .map(DefaultMessageSourceResolvable::getDefaultMessage)
         .collect(toList());
-  }
-
-  @ExceptionHandler(ModelNotFoundException.class)
-  @ResponseStatus(BAD_REQUEST)
-  String handleModelNotFoundException(ModelNotFoundException exception) {
-    return exception.getMessage();
   }
 }

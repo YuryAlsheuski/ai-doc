@@ -1,14 +1,14 @@
 package org.ai.doc.client.engine.ollama.client;
 
-import static org.ai.doc.common.engine.domain.EngineType.OLLAMA;
-import static org.ai.doc.common.model.domain.ModelType.IMAGE_DESCRIPTION;
-import static org.ai.doc.common.model.domain.ModelType.TEXT_GENERATION;
+import static org.ai.doc.model.domain.EngineType.OLLAMA;
+import static org.ai.doc.model.domain.ModelType.IMAGE_DESCRIPTION;
+import static org.ai.doc.model.domain.ModelType.TEXT_GENERATION;
 
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.ai.doc.client.domain.Client;
-import org.ai.doc.common.engine.domain.EngineType;
-import org.ai.doc.common.model.domain.ModelType;
+import org.ai.doc.model.domain.EngineType;
+import org.ai.doc.model.domain.ModelType;
 import org.modelmapper.ModelMapper;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;

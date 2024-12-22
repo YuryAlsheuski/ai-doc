@@ -13,7 +13,7 @@ import org.ai.doc.core.domain.ContentType;
 @Setter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MediaDTO { // todo add validation in the future
+public class MediaDTO {
 
   @NotNull(message = "{media.type.not.null}")
   private ContentType type;

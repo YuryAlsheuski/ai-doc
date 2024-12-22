@@ -5,10 +5,10 @@ import static java.util.stream.Collectors.toMap;
 import java.util.List;
 import java.util.Map;
 import org.ai.doc.client.domain.Client;
-import org.ai.doc.common.engine.domain.EngineType;
-import org.ai.doc.common.model.domain.Model;
-import org.ai.doc.common.model.domain.ModelType;
-import org.ai.doc.common.model.factory.ModelFactory;
+import org.ai.doc.model.domain.EngineType;
+import org.ai.doc.model.domain.Model;
+import org.ai.doc.model.domain.ModelType;
+import org.ai.doc.model.factory.ModelFactory;
 import org.springframework.ai.model.ModelResponse;
 import org.springframework.stereotype.Component;
 

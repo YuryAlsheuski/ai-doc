@@ -1,4 +1,4 @@
-package org.ai.doc.core.exception;
+package org.ai.doc.model.exception;
 
 public class ModelNotFoundException extends RuntimeException {
   public ModelNotFoundException(String msg) {

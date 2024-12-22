@@ -1,9 +1,9 @@
 package org.ai.doc.core.domain;
 
-import static org.ai.doc.common.model.domain.ModelType.IMAGE_DESCRIPTION;
+import static org.ai.doc.model.domain.ModelType.IMAGE_DESCRIPTION;
 
 import lombok.Getter;
-import org.ai.doc.common.model.domain.ModelType;
+import org.ai.doc.model.domain.ModelType;
 
 @Getter
 public enum ContentType {

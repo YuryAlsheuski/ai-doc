@@ -2,15 +2,15 @@ package org.ai.doc.core.controller;
 
 // todo add swagger
 
-import static org.ai.doc.common.engine.domain.EngineType.OLLAMA;
-import static org.ai.doc.common.model.domain.ModelType.TEXT_EMBEDDING;
+import static org.ai.doc.model.domain.EngineType.OLLAMA;
+import static org.ai.doc.model.domain.ModelType.TEXT_EMBEDDING;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.ai.doc.client.factory.ClientFactory;
-import org.ai.doc.common.model.factory.ModelFactory;
 import org.ai.doc.core.dto.EmbeddingResponseDTO;
 import org.ai.doc.core.dto.PromptDTO;
+import org.ai.doc.model.factory.ModelFactory;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.embedding.EmbeddingResponse;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping(path = "/api/v1/llm")
 public class EmbeddingController {
+
   private final ClientFactory clientFactory;
   private final ModelFactory modelFactory;
 

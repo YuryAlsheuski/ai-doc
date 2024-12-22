@@ -1,8 +1,8 @@
 llm:
   engines:
-    - type: ollama
+    ollama:
       url: ${OLLAMA_URL:http://localhost:11434}
-    - type: open-ai
+    open-ai:
       url: http://openai:777
 
   models:
