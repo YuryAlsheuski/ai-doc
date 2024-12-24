@@ -1,4 +1,4 @@
-package org.ai.doc.client.engine.openai.config.api;
+package org.ai.doc.model.openai.config;
 
 import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.context.annotation.Bean;

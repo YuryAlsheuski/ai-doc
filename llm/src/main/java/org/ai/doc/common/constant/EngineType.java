@@ -1,4 +1,4 @@
-package org.ai.doc.model.domain;
+package org.ai.doc.common.constant;
 
 public enum EngineType {
   OLLAMA,

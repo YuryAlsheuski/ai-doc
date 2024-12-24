@@ -1,17 +1,17 @@
 package org.ai.doc.core.domain;
 
-import static org.ai.doc.model.domain.ModelType.IMAGE_DESCRIPTION;
+import static org.ai.doc.common.constant.Action.IMAGE_DESCRIPTION;
 
 import lombok.Getter;
-import org.ai.doc.model.domain.ModelType;
+import org.ai.doc.common.constant.Action;
 
 @Getter
 public enum ContentType {
   IMAGE(IMAGE_DESCRIPTION);
 
-  private final ModelType modelType;
+  private final Action action;
 
-  ContentType(ModelType modelType) {
-    this.modelType = modelType;
+  ContentType(Action action) {
+    this.action = action;
   }
 }

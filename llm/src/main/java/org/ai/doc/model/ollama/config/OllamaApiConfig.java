@@ -1,4 +1,4 @@
-package org.ai.doc.client.engine.ollama.config.api;
+package org.ai.doc.model.ollama.config;
 
 import org.springframework.ai.ollama.api.OllamaApi;
 import org.springframework.beans.factory.annotation.Value;

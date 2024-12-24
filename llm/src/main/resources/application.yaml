@@ -7,22 +7,22 @@ llm:
 
   models:
     - engine: ollama
-      type: text-embedding
+      action: text-embedding
       name: nomic-embed-text:latest
     - engine: ollama
-      type: text-generation
+      action: text-generation
       name: llama3:latest
     - engine: ollama
-      type: image-description
+      action: image-description
       name: llava:latest
     - engine: open-ai
-      type: text-embedding
+      action: text-embedding
       name: test1
  #   - engine: open-ai
- #     type: text-generation
+ #     action: text-generation
  #     name: test2
  #   - engine: open-ai
- #     type: image-description
+ #     action: image-description
  #     name: test3
 
 spring:

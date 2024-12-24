@@ -2,18 +2,19 @@ package org.ai.doc.core.controller;
 
 // todo add swagger
 
-import static org.ai.doc.model.domain.EngineType.OLLAMA;
-import static org.ai.doc.model.domain.ModelType.TEXT_GENERATION;
+import static org.ai.doc.common.constant.Action.TEXT_GENERATION;
+import static org.ai.doc.common.constant.EngineType.OLLAMA;
 
 import jakarta.validation.Valid;
 import java.util.function.Function;
 import lombok.RequiredArgsConstructor;
-import org.ai.doc.client.factory.ClientFactory;
-import org.ai.doc.core.converter.ModelOptionsDTOConverter;
-import org.ai.doc.core.converter.PromptDTOConverter;
+import org.ai.doc.core.converter.LLMRequestConverter;
 import org.ai.doc.core.dto.ChatResponseDTO;
+import org.ai.doc.core.dto.ModelOptionsDTO;
 import org.ai.doc.core.dto.PromptDTO;
+import org.ai.doc.model.service.ModelService;
 import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.ai.model.ModelResponse;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,9 +28,8 @@ import reactor.core.publisher.Mono;
 @RequestMapping(path = "/api/v1/llm")
 public class GenerationController {
 
-  private final ClientFactory clientFactory;
-  private final PromptDTOConverter promptConverter;
-  private final ModelOptionsDTOConverter modelOptionsConverter;
+  private final ModelService modelService;
+  private final LLMRequestConverter llmRequestConverter;
 
   @PostMapping("/text/generations")
   @SuppressWarnings("ReactiveStreamsUnusedPublisher")
@@ -37,25 +37,23 @@ public class GenerationController {
       @Valid @RequestBody PromptDTO dto, @RequestParam(defaultValue = "false") String stream) {
 
     var requestMedia = dto.getMedia();
-    var modelType = requestMedia == null ? TEXT_GENERATION : requestMedia.getType().getModelType();
-    var model = modelOptionsConverter.toModel(dto.getModelOptions(), OLLAMA, modelType);
-    var modelOptions = modelOptionsConverter.toModelOptions(dto.getModelOptions(), model.getName());
-
-    var prompt = promptConverter.toPrompt(dto);
-
-    var client = clientFactory.<ChatResponse>getClient(model);
+    var action = requestMedia == null ? TEXT_GENERATION : requestMedia.getType().getAction();
+    var request = llmRequestConverter.toRequest(dto, OLLAMA, action);
+    var modelName = ((ModelOptionsDTO) request.getModelOptions()).getModel();
+    var model = modelService.getModel(request.getEngine(), request.getAction(), modelName);
 
     if (Boolean.parseBoolean(stream)) {
-      return client.stream(prompt, modelOptions).map(parse());
+      return model.stream(request).map(parse());
     }
-    var response = client.call(prompt, modelOptions);
+    var response = model.call(request);
     return Mono.just(parse().apply(response));
   }
 
-  private Function<ChatResponse, ChatResponseDTO> parse() {
+  private Function<ModelResponse<?>, ChatResponseDTO> parse() {
     return response -> {
-      var result = response.getResult();
-      var usage = response.getMetadata().getUsage();
+      var chatResponse = (ChatResponse) response;
+      var result = chatResponse.getResult();
+      var usage = chatResponse.getMetadata().getUsage();
 
       var done = result.getMetadata().getFinishReason() != null;
       var content = result.getOutput().getContent();

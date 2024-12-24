@@ -1,6 +1,6 @@
-package org.ai.doc.model.domain;
+package org.ai.doc.common.constant;
 
-public enum ModelType {
+public enum Action {
   TEXT_EMBEDDING,
   TEXT_GENERATION,
   IMAGE_DESCRIPTION
