@@ -1,14 +1,14 @@
 package org.ai.doc.client.engine.ollama.client;
 
 import static org.ai.doc.model.domain.EngineType.OLLAMA;
-import static org.ai.doc.model.domain.ModelType.TEXT_EMBEDDING;
+import static org.ai.doc.model.domain.Action.TEXT_EMBEDDING;
 
 import java.util.List;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.ai.doc.client.domain.Client;
 import org.ai.doc.model.domain.EngineType;
-import org.ai.doc.model.domain.ModelType;
+import org.ai.doc.model.domain.Action;
 import org.modelmapper.ModelMapper;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.embedding.EmbeddingRequest;
@@ -45,7 +45,7 @@ final class OllamaEmbeddingClient implements Client<EmbeddingResponse> {
   }
 
   @Override
-  public Set<ModelType> getSupportedModelTypes() {
+  public Set<Action> getSupportedModelTypes() {
     return Set.of(TEXT_EMBEDDING);
   }
 }

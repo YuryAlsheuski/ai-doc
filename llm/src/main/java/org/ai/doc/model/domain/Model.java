@@ -9,6 +9,6 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public class Model {
   private final EngineType engine;
-  private final ModelType type;
+  private final Action action;
   private final String name;
 }

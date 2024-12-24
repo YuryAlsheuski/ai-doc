@@ -2,16 +2,16 @@ package org.ai.doc.core.controller;
 
 // todo add swagger
 
+import static org.ai.doc.model.domain.Action.TEXT_EMBEDDING;
 import static org.ai.doc.model.domain.EngineType.OLLAMA;
-import static org.ai.doc.model.domain.ModelType.TEXT_EMBEDDING;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.ai.doc.client.factory.ClientFactory;
+import org.ai.doc.core.converter.LLMRequestConverter;
 import org.ai.doc.core.dto.EmbeddingResponseDTO;
+import org.ai.doc.core.dto.ModelOptionsDTO;
 import org.ai.doc.core.dto.PromptDTO;
-import org.ai.doc.model.factory.ModelFactory;
-import org.springframework.ai.chat.prompt.Prompt;
+import org.ai.doc.testmodel.service.ModelService;
 import org.springframework.ai.embedding.EmbeddingResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,17 +24,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/api/v1/llm")
 public class EmbeddingController {
 
-  private final ClientFactory clientFactory;
-  private final ModelFactory modelFactory;
+  private final ModelService modelService;
+  private final LLMRequestConverter llmRequestConverter;
 
   @PostMapping("/embeddings")
-  ResponseEntity<EmbeddingResponseDTO> embedd(@Valid @RequestBody PromptDTO dto) {
-    var prompt = new Prompt(dto.getQuery());
-    var model = modelFactory.getModel(OLLAMA, TEXT_EMBEDDING);
-    var response =
-        clientFactory.<EmbeddingResponse>getClient(model).call(prompt, dto.getModelOptions());
+  ResponseEntity<EmbeddingResponseDTO> embed(@Valid @RequestBody PromptDTO dto) {
+
+    var request = llmRequestConverter.toRequest(dto, OLLAMA, TEXT_EMBEDDING);
+    var modelName = ((ModelOptionsDTO) request.getModelOptions()).getModel();
+    var model = modelService.getModel(request.getEngine(), request.getAction(), modelName);
+
+    var response = (EmbeddingResponse) model.call(request);
     var vector = response.getResult().getOutput();
     var responseDTO = EmbeddingResponseDTO.builder().vector(vector).size(vector.size()).build();
+
     return ResponseEntity.ok(responseDTO);
   }
 }
