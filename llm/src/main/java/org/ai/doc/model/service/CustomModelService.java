@@ -1,4 +1,4 @@
-package org.ai.doc.testmodel.service;
+package org.ai.doc.model.service;
 
 import static java.text.MessageFormat.format;
 import static java.util.stream.Collectors.toMap;
@@ -8,11 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import lombok.Setter;
-import org.ai.doc.model.domain.Action;
-import org.ai.doc.model.domain.EngineType;
-import org.ai.doc.model.domain.Model;
+import org.ai.doc.common.constant.Action;
+import org.ai.doc.common.constant.EngineType;
+import org.ai.doc.model.AIModel;
 import org.ai.doc.model.exception.ModelNotFoundException;
-import org.ai.doc.testmodel.AIModel;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -20,7 +19,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(prefix = "llm")
-public class CustomModelService implements ModelService {
+class CustomModelService implements ModelService {
 
   private Map<Model, AIModel<?>> modelDescriptionToAiModel;
   @Autowired private List<AIModel<?>> customModels;
@@ -40,16 +39,16 @@ public class CustomModelService implements ModelService {
   public String getDefaultName(EngineType engineType, Action action) {
     var model =
         models.stream()
-            .filter(m -> m.getEngine() == engineType && m.getAction() == action)
+            .filter(m -> m.engine() == engineType && m.action() == action)
             .findFirst()
             .orElseThrow(() -> getModelNotFoundException(engineType, action, null));
-    return model.getName();
+    return model.name();
   }
 
   @PostConstruct
-  void init() {
+  private void init() {
     modelDescriptionToAiModel =
-        models.stream().collect(toMap(k -> k, v -> getModel(v.getEngine(), v.getAction())));
+        models.stream().collect(toMap(k -> k, v -> getModel(v.engine(), v.action())));
   }
 
   private AIModel<?> getModel(EngineType engineType, Action action) {
@@ -72,4 +71,6 @@ public class CustomModelService implements ModelService {
             modelNamePart, action, engineType);
     return new ModelNotFoundException(message);
   }
+
+  record Model(EngineType engine, Action action, String name) {}
 }

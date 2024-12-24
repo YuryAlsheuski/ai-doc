@@ -1,13 +1,13 @@
-package org.ai.doc.testmodel.openai;
+package org.ai.doc.model.openai;
 
-import static org.ai.doc.model.domain.Action.TEXT_EMBEDDING;
-import static org.ai.doc.model.domain.EngineType.OPEN_AI;
+import static org.ai.doc.common.constant.Action.TEXT_EMBEDDING;
+import static org.ai.doc.common.constant.EngineType.OPEN_AI;
 
 import java.util.Set;
+import org.ai.doc.common.constant.Action;
+import org.ai.doc.common.constant.EngineType;
 import org.ai.doc.common.request.LLMRequest;
-import org.ai.doc.model.domain.Action;
-import org.ai.doc.model.domain.EngineType;
-import org.ai.doc.testmodel.AIModel;
+import org.ai.doc.model.AIModel;
 import org.springframework.ai.embedding.EmbeddingResponse;
 import org.springframework.ai.openai.OpenAiEmbeddingModel;
 import org.springframework.ai.openai.OpenAiEmbeddingOptions;
@@ -16,10 +16,10 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
 @Component
-public class OpenAiEmbeddingModelCustom extends OpenAiEmbeddingModel
+class OpenAiEmbeddingModelCustom extends OpenAiEmbeddingModel
     implements AIModel<EmbeddingResponse> {
 
-  public OpenAiEmbeddingModelCustom(OpenAiApi openAiApi) {
+  OpenAiEmbeddingModelCustom(OpenAiApi openAiApi) {
     super(openAiApi);
   }
 

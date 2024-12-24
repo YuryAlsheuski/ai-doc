@@ -1,14 +1,14 @@
-package org.ai.doc.testmodel.openai;
+package org.ai.doc.model.openai;
 
-import static org.ai.doc.model.domain.Action.IMAGE_DESCRIPTION;
-import static org.ai.doc.model.domain.Action.TEXT_GENERATION;
-import static org.ai.doc.model.domain.EngineType.OPEN_AI;
+import static org.ai.doc.common.constant.Action.IMAGE_DESCRIPTION;
+import static org.ai.doc.common.constant.Action.TEXT_GENERATION;
+import static org.ai.doc.common.constant.EngineType.OPEN_AI;
 
 import java.util.Set;
+import org.ai.doc.common.constant.Action;
+import org.ai.doc.common.constant.EngineType;
 import org.ai.doc.common.request.LLMRequest;
-import org.ai.doc.model.domain.Action;
-import org.ai.doc.model.domain.EngineType;
-import org.ai.doc.testmodel.AIModel;
+import org.ai.doc.model.AIModel;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.openai.OpenAiChatOptions;
@@ -17,9 +17,9 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
 @Component
-public class OpenAiChatModelCustom extends OpenAiChatModel implements AIModel<ChatResponse> {
+class OpenAiChatModelCustom extends OpenAiChatModel implements AIModel<ChatResponse> {
 
-  public OpenAiChatModelCustom(OpenAiApi openAiApi) {
+  OpenAiChatModelCustom(OpenAiApi openAiApi) {
     super(openAiApi);
   }
 

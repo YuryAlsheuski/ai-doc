@@ -1,14 +1,14 @@
-package org.ai.doc.testmodel.ollama;
+package org.ai.doc.model.ollama;
 
-import static org.ai.doc.model.domain.Action.IMAGE_DESCRIPTION;
-import static org.ai.doc.model.domain.Action.TEXT_GENERATION;
-import static org.ai.doc.model.domain.EngineType.OLLAMA;
+import static org.ai.doc.common.constant.Action.IMAGE_DESCRIPTION;
+import static org.ai.doc.common.constant.Action.TEXT_GENERATION;
+import static org.ai.doc.common.constant.EngineType.OLLAMA;
 
 import java.util.Set;
+import org.ai.doc.common.constant.Action;
+import org.ai.doc.common.constant.EngineType;
 import org.ai.doc.common.request.LLMRequest;
-import org.ai.doc.model.domain.Action;
-import org.ai.doc.model.domain.EngineType;
-import org.ai.doc.testmodel.AIModel;
+import org.ai.doc.model.AIModel;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.ai.ollama.api.OllamaApi;
@@ -17,9 +17,9 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
 @Component
-public class OllamaChatModelCustom extends OllamaChatModel implements AIModel<ChatResponse> {
+class OllamaChatModelCustom extends OllamaChatModel implements AIModel<ChatResponse> {
 
-  public OllamaChatModelCustom(OllamaApi chatApi) {
+  OllamaChatModelCustom(OllamaApi chatApi) {
     super(chatApi);
   }
 

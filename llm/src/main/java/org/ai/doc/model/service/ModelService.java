@@ -1,8 +1,8 @@
-package org.ai.doc.testmodel.service;
+package org.ai.doc.model.service;
 
-import org.ai.doc.model.domain.Action;
-import org.ai.doc.model.domain.EngineType;
-import org.ai.doc.testmodel.AIModel;
+import org.ai.doc.common.constant.Action;
+import org.ai.doc.common.constant.EngineType;
+import org.ai.doc.model.AIModel;
 
 public interface ModelService {
 

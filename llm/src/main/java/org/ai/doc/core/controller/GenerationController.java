@@ -2,8 +2,8 @@ package org.ai.doc.core.controller;
 
 // todo add swagger
 
-import static org.ai.doc.model.domain.Action.TEXT_GENERATION;
-import static org.ai.doc.model.domain.EngineType.OLLAMA;
+import static org.ai.doc.common.constant.Action.TEXT_GENERATION;
+import static org.ai.doc.common.constant.EngineType.OLLAMA;
 
 import jakarta.validation.Valid;
 import java.util.function.Function;
@@ -12,7 +12,7 @@ import org.ai.doc.core.converter.LLMRequestConverter;
 import org.ai.doc.core.dto.ChatResponseDTO;
 import org.ai.doc.core.dto.ModelOptionsDTO;
 import org.ai.doc.core.dto.PromptDTO;
-import org.ai.doc.testmodel.service.ModelService;
+import org.ai.doc.model.service.ModelService;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.model.ModelResponse;
 import org.springframework.web.bind.annotation.PostMapping;

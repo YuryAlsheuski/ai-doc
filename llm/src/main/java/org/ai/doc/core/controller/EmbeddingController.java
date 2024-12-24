@@ -2,8 +2,8 @@ package org.ai.doc.core.controller;
 
 // todo add swagger
 
-import static org.ai.doc.model.domain.Action.TEXT_EMBEDDING;
-import static org.ai.doc.model.domain.EngineType.OLLAMA;
+import static org.ai.doc.common.constant.Action.TEXT_EMBEDDING;
+import static org.ai.doc.common.constant.EngineType.OLLAMA;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import org.ai.doc.core.converter.LLMRequestConverter;
 import org.ai.doc.core.dto.EmbeddingResponseDTO;
 import org.ai.doc.core.dto.ModelOptionsDTO;
 import org.ai.doc.core.dto.PromptDTO;
-import org.ai.doc.testmodel.service.ModelService;
+import org.ai.doc.model.service.ModelService;
 import org.springframework.ai.embedding.EmbeddingResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
