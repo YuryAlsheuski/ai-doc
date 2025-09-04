@@ -1,0 +1,1 @@
+This is example of llm aggregator web service which provide opportunity to use ollama models local engine as well as common existed vendors like OpenAI etc. 
