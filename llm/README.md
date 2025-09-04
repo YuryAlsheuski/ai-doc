@@ -1,1 +1,2 @@
-This is example of llm aggregator web service which provide opportunity to use ollama models local engine as well as common existed vendors like OpenAI etc. 
+This is example of llm aggregator web service which provide opportunity to use ollama models local engine as well as common existed vendors like OpenAI etc.
+List of free local models which we can use - https://ollama.com/library. Also, we can smoothly switch to another allowed engine/model from UI side - see currently supported in application.yaml
